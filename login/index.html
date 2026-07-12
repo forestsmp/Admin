@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="km">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="https://i.ibb.co/S4vrvBq8/logo-website.png">
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Hanuman:wght@300;400;700&family=Poppins:wght@300;400;600;700&display=swap');
+        
+        :root { 
+            --primary-color: #667eea;
+            --secondary-color: #764ba2;
+            --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        
+        body { 
+            font-family: 'Poppins', 'Hanuman', sans-serif; 
+            min-height: 100vh;
+            background: linear-gradient(135deg, #87CEEB 0%, #E0F6FF 30%, #B0E0E6 60%, #87CEEB 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .auth-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 25px;
+            padding: 40px;
+            width: 100%;
+            max-width: 450px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+            border: 1px solid rgba(255,255,255,0.5);
+        }
+        
+        .auth-title {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #2c3e50;
+        }
+        
+        .auth-title h2 {
+            background: var(--primary-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 700;
+        }
+        
+        .form-control {
+            border-radius: 12px;
+            padding: 12px 15px;
+            border: 2px solid #e2e8f0;
+        }
+        
+        .form-control:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1);
+        }
+        
+        .btn-auth {
+            background: var(--primary-gradient);
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 50px;
+            font-weight: 600;
+            width: 100%;
+            transition: all 0.3s;
+        }
+        
+        .btn-auth:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
+        }
+        
+        .auth-link {
+            text-align: center;
+            margin-top: 20px;
+        }
+        
+        .auth-link a {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="auth-card">
+        <div class="auth-title">
+            <img src="https://i.ibb.co/S4vrvBq8/logo-website.png" alt="Logo" style="height: 60px; margin-bottom: 15px;">
+            <h2>Welcome Back</h2>
+            <p class="text-muted">Login to your AHNAJAK CODE account</p>
+        </div>
+
+        <form id="loginForm">
+            <div class="mb-3">
+                <label class="form-label fw-bold"><i class="bi bi-envelope"></i> Email Address</label>
+                <input type="email" id="loginEmail" class="form-control" placeholder="name@example.com" required>
+            </div>
+            <div class="mb-3">
+                <label class="form-label fw-bold"><i class="bi bi-lock"></i> Password</label>
+                <input type="password" id="loginPassword" class="form-control" placeholder="••••••••" required>
+            </div>
+            
+            <button type="submit" class="btn-auth mt-3">
+                <i class="bi bi-box-arrow-in-right"></i> Login
+            </button>
+        </form>
+
+        <div class="auth-link">
+            Don't have an account? <a href="../register/register.html">Register here</a>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const email = document.getElementById('loginEmail').value;
+            const password = document.getElementById('loginPassword').value;
+
+            // ទាញយកទិន្នន័យ User ពី LocalStorage
+            let users = JSON.parse(localStorage.getItem('ahnajak_users')) || [];
+            
+            // ស្វែងរក User ដែលត្រូវនឹង Email និង Password
+            const user = users.find(u => u.email === email && u.password === password);
+
+            if (user) {
+                // រក្សាទុក Session បច្ចុប្បន្ន
+                localStorage.setItem('current_user', JSON.stringify(user));
+                
+                alert('Login បានជោគជ័យ!');
+                // Redirect ទៅកាន់ទំព័រដើម (ឧទាហរណ៍ index.html នៅ root)
+                // ប្រសិនបើអ្នកមាន file index.html នៅខាងក្រៅ folder login
+                window.location.href = '../../index.html'; 
+            } else {
+                alert('Email ឬ Password មិនត្រឹមត្រូវ!');
+            }
+        });
+    </script>
+</body>
+</html>
