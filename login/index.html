@@ -3,13 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
+    <title>Login - AHNAJAK CODE</title>
     
+    <!-- Favicon -->
     <link rel="icon" type="image/png" href="https://i.ibb.co/S4vrvBq8/logo-website.png">
+    
+    <!-- Bootstrap & Icons -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
     
-    <!-- Google Identity Services -->
+    <!-- Google Identity Services (Production Ready) -->
     <script src="https://accounts.google.com/gsi/client" async defer></script>
     
     <style>
@@ -18,8 +21,13 @@
         :root { 
             --primary-color: #667eea;
             --secondary-color: #764ba2;
+            --success-color: #11998e;
+            --danger-color: #ee0979;
             --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --success-gradient: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
         }
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         
         body { 
             font-family: 'Poppins', 'Hanuman', sans-serif; 
@@ -29,132 +37,268 @@
             align-items: center;
             justify-content: center;
             padding: 20px;
+            position: relative;
+            overflow-x: hidden;
+        }
+        
+        /* Background Effects */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: radial-gradient(circle at 20% 30%, rgba(255,255,255,0.8) 0%, transparent 40%),
+                        radial-gradient(circle at 80% 70%, rgba(255,255,255,0.6) 0%, transparent 50%);
+            z-index: -1;
+            pointer-events: none;
         }
         
         .auth-card {
             background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
+            backdrop-filter: blur(20px);
             border-radius: 25px;
             padding: 40px;
             width: 100%;
-            max-width: 450px;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
-            border: 1px solid rgba(255,255,255,0.5);
+            max-width: 460px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.1);
+            border: 1px solid rgba(255,255,255,0.6);
+            animation: fadeInUp 0.6s ease;
+        }
+        
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
         }
         
         .auth-title { text-align: center; margin-bottom: 30px; color: #2c3e50; }
+        .auth-title img { height: 60px; margin-bottom: 15px; }
         .auth-title h2 {
             background: var(--primary-gradient);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             font-weight: 700;
+            font-size: 2rem;
+            margin-bottom: 8px;
         }
+        .auth-title p { color: #718096; margin-bottom: 0; }
         
-        .form-control { border-radius: 12px; padding: 12px 15px; border: 2px solid #e2e8f0; }
-        .form-control:focus { border-color: var(--primary-color); box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1); }
-        
-        .btn-auth {
-            background: var(--primary-gradient); color: white; border: none;
-            padding: 12px; border-radius: 50px; font-weight: 600; width: 100%;
-            transition: all 0.3s; margin-top: 10px;
+        /* Google Button Container */
+        .google-btn-wrapper {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 5px;
         }
-        .btn-auth:hover { transform: translateY(-2px); box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4); }
         
         .divider {
-            display: flex; align-items: center; text-align: center; margin: 25px 0; color: #718096;
+            display: flex;
+            align-items: center;
+            text-align: center;
+            margin: 25px 0;
+            color: #a0aec0;
         }
-        .divider::before, .divider::after { content: ''; flex: 1; border-bottom: 1px solid #e2e8f0; }
-        .divider span { padding: 0 15px; font-size: 0.9rem; }
+        .divider::before, .divider::after {
+            content: '';
+            flex: 1;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        .divider span {
+            padding: 0 15px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
         
-        .auth-link { text-align: center; margin-top: 20px; }
-        .auth-link a { color: var(--primary-color); text-decoration: none; font-weight: 600; }
+        .form-control {
+            border-radius: 12px;
+            padding: 14px 18px;
+            border: 2px solid #e2e8f0;
+            font-size: 0.95rem;
+            transition: all 0.3s;
+        }
+        .form-control:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1);
+        }
+        .form-label { font-size: 0.9rem; color: #4a5568; margin-bottom: 6px; }
+        
+        .btn-auth {
+            background: var(--primary-gradient);
+            color: white;
+            border: none;
+            padding: 14px;
+            border-radius: 50px;
+            font-weight: 600;
+            width: 100%;
+            transition: all 0.3s;
+            margin-top: 10px;
+            font-size: 1rem;
+            position: relative;
+            overflow: hidden;
+        }
+        .btn-auth:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+            color: white;
+        }
+        .btn-auth:active { transform: translateY(0); }
         
         .forgot-link {
             display: block;
             text-align: right;
-            margin-top: -10px;
+            margin-top: -8px;
             margin-bottom: 15px;
         }
-        
         .forgot-link a {
             color: var(--primary-color);
             text-decoration: none;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             font-weight: 500;
+            transition: all 0.2s;
         }
+        .forgot-link a:hover { text-decoration: underline; color: var(--secondary-color); }
         
-        .forgot-link a:hover {
-            text-decoration: underline;
+        .auth-link { text-align: center; margin-top: 25px; font-size: 0.9rem; color: #718096; }
+        .auth-link a {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.2s;
         }
+        .auth-link a:hover { color: var(--secondary-color); }
         
         /* Modal Styles */
         .modal-content {
             border-radius: 20px;
             border: none;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            box-shadow: 0 25px 70px rgba(0,0,0,0.25);
+            overflow: hidden;
         }
-        
         .modal-header {
             background: var(--primary-gradient);
             color: white;
-            border-radius: 20px 20px 0 0;
             border: none;
             padding: 25px 30px;
         }
-        
-        .modal-header .btn-close {
-            filter: brightness(0) invert(1);
-        }
-        
-        .modal-body {
-            padding: 30px;
-        }
-        
-        .modal-footer {
-            border: none;
-            padding: 0 30px 30px;
-        }
+        .modal-header.reset-header { background: var(--success-gradient); }
+        .modal-header .btn-close { filter: brightness(0) invert(1); opacity: 0.8; }
+        .modal-header .btn-close:hover { opacity: 1; }
+        .modal-body { padding: 30px; }
+        .modal-footer { border: none; padding: 0 30px 25px; }
         
         .btn-reset {
             background: var(--primary-gradient);
             color: white;
             border: none;
-            padding: 12px 30px;
+            padding: 14px 30px;
             border-radius: 50px;
             font-weight: 600;
             transition: all 0.3s;
+            width: 100%;
         }
-        
+        .btn-reset.success-btn { background: var(--success-gradient); }
         .btn-reset:hover {
             transform: translateY(-2px);
             box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
+            color: white;
         }
         
         .info-box {
             background: #e6fffa;
-            border-left: 4px solid #11998e;
-            padding: 15px;
-            border-radius: 8px;
+            border-left: 4px solid var(--success-color);
+            padding: 15px 18px;
+            border-radius: 10px;
             margin-bottom: 20px;
             color: #2d3748;
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+        .info-box i { color: var(--success-color); margin-right: 8px; }
+        .info-box.blue { background: #ebf8ff; border-left-color: #3182ce; }
+        .info-box.blue i { color: #3182ce; }
+        
+        /* Custom Alert */
+        .custom-alert {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 99999;
+            min-width: 320px;
+            max-width: 420px;
+            border-radius: 15px;
+            padding: 18px 22px;
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+            animation: slideInRight 0.4s ease;
+            backdrop-filter: blur(10px);
+        }
+        .custom-alert.alert-success-custom {
+            background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+            color: white;
+        }
+        .custom-alert.alert-error-custom {
+            background: linear-gradient(135deg, #ee0979 0%, #ff6a00 100%);
+            color: white;
+        }
+        .custom-alert .alert-icon { font-size: 1.4rem; flex-shrink: 0; margin-top: 2px; }
+        .custom-alert .alert-content strong { display: block; margin-bottom: 2px; font-size: 0.95rem; }
+        .custom-alert .alert-content span { font-size: 0.85rem; opacity: 0.95; }
+        .custom-alert .btn-close-alert {
+            background: none; border: none; color: white; opacity: 0.7;
+            cursor: pointer; padding: 0; margin-left: auto; font-size: 1.2rem;
+            transition: opacity 0.2s;
+        }
+        .custom-alert .btn-close-alert:hover { opacity: 1; }
+        
+        @keyframes slideInRight {
+            from { opacity: 0; transform: translateX(100%); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+        @keyframes fadeOut {
+            from { opacity: 1; transform: translateX(0); }
+            to { opacity: 0; transform: translateX(50px); }
         }
         
-        .info-box i {
-            color: #11998e;
-            margin-right: 8px;
+        /* Password Toggle */
+        .password-wrapper { position: relative; }
+        .password-wrapper .form-control { padding-right: 45px; }
+        .password-toggle {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: #a0aec0;
+            cursor: pointer;
+            padding: 0;
+            font-size: 1.1rem;
+            transition: color 0.2s;
+            z-index: 5;
+        }
+        .password-toggle:hover { color: var(--primary-color); }
+        
+        @media (max-width: 480px) {
+            .auth-card { padding: 30px 25px; }
+            .auth-title h2 { font-size: 1.6rem; }
+            .custom-alert { min-width: 280px; right: 10px; left: 10px; max-width: none; }
         }
     </style>
 </head>
 <body>
 
+    <!-- Alert Container -->
+    <div id="alertContainer"></div>
+
     <div class="auth-card">
         <div class="auth-title">
-            <img src="https://i.ibb.co/S4vrvBq8/logo-website.png" alt="Logo" style="height: 60px; margin-bottom: 15px;">
+            <img src="https://i.ibb.co/S4vrvBq8/logo-website.png" alt="AHNAJAK CODE Logo">
             <h2>Welcome Back</h2>
-            <p class="text-muted">Login to your AHNAJAK CODE account</p>
+            <p>Login to your AHNAJAK CODE account</p>
         </div>
 
-        <!-- Google Sign-In Button -->
+        <!-- Google Sign-In -->
         <div id="g_id_onload"
              data-client_id="166296204052-ba45pf8lu1tsdfv5590oreeg3daae0s5.apps.googleusercontent.com"
              data-context="signin"
@@ -163,39 +307,46 @@
              data-auto_prompt="false">
         </div>
 
-        <div class="g_id_signin"
-             data-type="standard"
-             data-shape="rectangular"
-             data-theme="outline"
-             data-text="signin_with"
-             data-size="large"
-             data-logo_alignment="left"
-             data-width="380">
+        <div class="google-btn-wrapper">
+            <div class="g_id_signin"
+                 data-type="standard"
+                 data-shape="rectangular"
+                 data-theme="outline"
+                 data-text="signin_with"
+                 data-size="large"
+                 data-logo_alignment="left"
+                 data-width="380">
+            </div>
         </div>
 
         <div class="divider">
-            <span>OR LOGIN WITH EMAIL</span>
+            <span>or login with email</span>
         </div>
 
-        <form id="loginForm">
+        <!-- Email/Password Login Form -->
+        <form id="loginForm" novalidate>
             <div class="mb-3">
-                <label class="form-label fw-bold"><i class="bi bi-envelope"></i> Email Address</label>
-                <input type="email" id="loginEmail" class="form-control" placeholder="name@example.com" required>
+                <label class="form-label fw-bold"><i class="bi bi-envelope me-1"></i> Email Address</label>
+                <input type="email" id="loginEmail" class="form-control" placeholder="name@example.com" required autocomplete="email">
             </div>
             <div class="mb-3">
-                <label class="form-label fw-bold"><i class="bi bi-lock"></i> Password</label>
-                <input type="password" id="loginPassword" class="form-control" placeholder="••••••••" required>
+                <label class="form-label fw-bold"><i class="bi bi-lock me-1"></i> Password</label>
+                <div class="password-wrapper">
+                    <input type="password" id="loginPassword" class="form-control" placeholder="••••••••" required autocomplete="current-password">
+                    <button type="button" class="password-toggle" onclick="togglePassword('loginPassword', this)" tabindex="-1">
+                        <i class="bi bi-eye"></i>
+                    </button>
+                </div>
             </div>
             
-            <!-- Forgot Password Link -->
             <div class="forgot-link">
                 <a href="#" data-bs-toggle="modal" data-bs-target="#forgotPasswordModal">
-                    <i class="bi bi-question-circle"></i> Forgot Password?
+                    <i class="bi bi-question-circle me-1"></i> Forgot Password?
                 </a>
             </div>
             
             <button type="submit" class="btn-auth">
-                <i class="bi bi-box-arrow-in-right"></i> Login
+                <i class="bi bi-box-arrow-in-right me-2"></i> Login
             </button>
         </form>
 
@@ -205,40 +356,33 @@
     </div>
 
     <!-- Forgot Password Modal -->
-    <div class="modal fade" id="forgotPasswordModal" tabindex="-1">
+    <div class="modal fade" id="forgotPasswordModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">
-                        <i class="bi bi-key"></i> Forgot Password
-                    </h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    <h5 class="modal-title"><i class="bi bi-key me-2"></i> Forgot Password</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <div class="info-box">
+                    <div class="info-box blue">
                         <i class="bi bi-info-circle"></i>
-                        Enter your email address and we'll help you recover your account.
+                        Enter your registered email address. We'll verify your account and let you create a new password.
                     </div>
-                    
-                    <form id="forgotPasswordForm">
+                    <form id="forgotPasswordForm" novalidate>
                         <div class="mb-3">
-                            <label class="form-label fw-bold">
-                                <i class="bi bi-envelope"></i> Email Address
-                            </label>
-                            <input type="email" id="forgotEmail" class="form-control" 
-                                   placeholder="Enter your registered email" required>
+                            <label class="form-label fw-bold"><i class="bi bi-envelope me-1"></i> Email Address</label>
+                            <input type="email" id="forgotEmail" class="form-control" placeholder="Enter your registered email" required autocomplete="email">
                         </div>
-                        
-                        <div class="d-grid gap-2">
+                        <div class="d-grid">
                             <button type="submit" class="btn-reset">
-                                <i class="bi bi-send"></i> Send Recovery Link
+                                <i class="bi bi-search me-2"></i> Verify Email
                             </button>
                         </div>
                     </form>
                 </div>
                 <div class="modal-footer">
                     <p class="text-muted text-center w-100 mb-0" style="font-size: 0.85rem;">
-                        Remember your password? <a href="#" data-bs-dismiss="modal" style="color: var(--primary-color);">Login here</a>
+                        Remember your password? <a href="#" data-bs-dismiss="modal" style="color: var(--primary-color); font-weight: 600;">Back to Login</a>
                     </p>
                 </div>
             </div>
@@ -246,43 +390,44 @@
     </div>
 
     <!-- Reset Password Modal -->
-    <div class="modal fade" id="resetPasswordModal" tabindex="-1">
+    <div class="modal fade" id="resetPasswordModal" tabindex="-1" aria-hidden="true" data-bs-backdrop="static">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
-                <div class="modal-header" style="background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);">
-                    <h5 class="modal-title">
-                        <i class="bi bi-check-circle"></i> Reset Password
-                    </h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                <div class="modal-header reset-header">
+                    <h5 class="modal-title"><i class="bi bi-shield-lock me-2"></i> Reset Password</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <div class="info-box" style="background: #f0f9ff; border-left-color: #0ea5e9;">
-                        <i class="bi bi-shield-check" style="color: #0ea5e9;"></i>
-                        Create a new password for your account.
+                    <div class="info-box">
+                        <i class="bi bi-shield-check"></i>
+                        Create a strong new password for your account. Minimum 6 characters required.
                     </div>
-                    
-                    <form id="resetPasswordForm">
+                    <form id="resetPasswordForm" novalidate>
                         <input type="hidden" id="resetEmail">
                         
                         <div class="mb-3">
-                            <label class="form-label fw-bold">
-                                <i class="bi bi-lock"></i> New Password
-                            </label>
-                            <input type="password" id="newPassword" class="form-control" 
-                                   placeholder="Enter new password" required minlength="6">
+                            <label class="form-label fw-bold"><i class="bi bi-lock me-1"></i> New Password</label>
+                            <div class="password-wrapper">
+                                <input type="password" id="newPassword" class="form-control" placeholder="Enter new password" required minlength="6" autocomplete="new-password">
+                                <button type="button" class="password-toggle" onclick="togglePassword('newPassword', this)" tabindex="-1">
+                                    <i class="bi bi-eye"></i>
+                                </button>
+                            </div>
                         </div>
                         
                         <div class="mb-3">
-                            <label class="form-label fw-bold">
-                                <i class="bi bi-lock-fill"></i> Confirm Password
-                            </label>
-                            <input type="password" id="confirmPassword" class="form-control" 
-                                   placeholder="Confirm new password" required>
+                            <label class="form-label fw-bold"><i class="bi bi-lock-fill me-1"></i> Confirm Password</label>
+                            <div class="password-wrapper">
+                                <input type="password" id="confirmPassword" class="form-control" placeholder="Confirm new password" required autocomplete="new-password">
+                                <button type="button" class="password-toggle" onclick="togglePassword('confirmPassword', this)" tabindex="-1">
+                                    <i class="bi bi-eye"></i>
+                                </button>
+                            </div>
                         </div>
                         
-                        <div class="d-grid gap-2">
-                            <button type="submit" class="btn-reset" style="background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);">
-                                <i class="bi bi-check2-circle"></i> Reset Password
+                        <div class="d-grid">
+                            <button type="submit" class="btn-reset success-btn">
+                                <i class="bi bi-check2-circle me-2"></i> Reset Password
                             </button>
                         </div>
                     </form>
@@ -291,114 +436,144 @@
         </div>
     </div>
 
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
     <script>
-        // Handle Google Sign-In response
+        // ==========================================
+        // GOOGLE SIGN-IN HANDLER
+        // ==========================================
         function handleCredentialResponse(response) {
-            const responsePayload = decodeJwtResponse(response.credential);
+            try {
+                const payload = decodeJwtResponse(response.credential);
+                
+                const googleUser = {
+                    name: payload.name,
+                    email: payload.email,
+                    picture: payload.picture,
+                    isGoogleUser: true
+                };
 
-            const googleUser = {
-                name: responsePayload.name,
-                email: responsePayload.email,
-                picture: responsePayload.picture,
-                isGoogleUser: true
-            };
-
-            let users = JSON.parse(localStorage.getItem('ahnajak_users')) || [];
-            const existingUser = users.find(u => u.email === googleUser.email);
-            
-            if (!existingUser) {
-                users.push(googleUser);
+                // Save/update user in localStorage
+                let users = JSON.parse(localStorage.getItem('ahnajak_users')) || [];
+                const existingIndex = users.findIndex(u => u.email === googleUser.email);
+                
+                if (existingIndex !== -1) {
+                    users[existingIndex] = { ...users[existingIndex], ...googleUser };
+                } else {
+                    users.push(googleUser);
+                }
                 localStorage.setItem('ahnajak_users', JSON.stringify(users));
+                localStorage.setItem('current_user', JSON.stringify(googleUser));
+                
+                showAlert('success', 'Welcome Back!', `Signed in as ${payload.name}`);
+                setTimeout(() => { window.location.href = '../..'; }, 1500);
+            } catch (err) {
+                console.error('Google Sign-In Error:', err);
+                showAlert('error', 'Sign-In Failed', 'Something went wrong. Please try again.');
             }
-
-            localStorage.setItem('current_user', JSON.stringify(googleUser));
-            
-            showAlert(`Welcome, ${responsePayload.name}!`, 'success');
-            setTimeout(() => {
-                window.location.href = '../../index.html';
-            }, 1500);
         }
 
-        // Decode JWT
         function decodeJwtResponse(token) {
-            var base64Url = token.split('.')[1];
-            var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-            var jsonPayload = decodeURIComponent(window.atob(base64).split('').map(function(c) {
-                return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
-            }).join(''));
+            const base64Url = token.split('.')[1];
+            const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+            const jsonPayload = decodeURIComponent(
+                atob(base64).split('').map(c => '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2)).join('')
+            );
             return JSON.parse(jsonPayload);
         }
 
-        // Regular email/password login
+        // ==========================================
+        // EMAIL/PASSWORD LOGIN
+        // ==========================================
         document.getElementById('loginForm').addEventListener('submit', function(e) {
             e.preventDefault();
-            const email = document.getElementById('loginEmail').value;
+            const email = document.getElementById('loginEmail').value.trim().toLowerCase();
             const password = document.getElementById('loginPassword').value;
-            let users = JSON.parse(localStorage.getItem('ahnajak_users')) || [];
+            
+            if (!email || !password) {
+                showAlert('error', 'Missing Fields', 'Please fill in all fields.');
+                return;
+            }
+
+            const users = JSON.parse(localStorage.getItem('ahnajak_users')) || [];
             const user = users.find(u => u.email === email && u.password === password);
 
             if (user) {
                 localStorage.setItem('current_user', JSON.stringify(user));
-                showAlert('Login successful!', 'success');
-                setTimeout(() => {
-                    window.location.href = '../../index.html';
-                }, 1500);
+                showAlert('success', 'Login Successful!', `Welcome back, ${user.name}!`);
+                setTimeout(() => { window.location.href = '../..'; }, 1500);
             } else {
-                showAlert('Email or Password incorrect!', 'error');
+                // Check if email exists but wrong password
+                const emailExists = users.find(u => u.email === email);
+                if (emailExists && emailExists.isGoogleUser) {
+                    showAlert('error', 'Google Account', 'This account uses Google Sign-In. Please use the Google button above.');
+                } else if (emailExists) {
+                    showAlert('error', 'Wrong Password', 'The password you entered is incorrect.');
+                } else {
+                    showAlert('error', 'Account Not Found', 'No account found with this email address.');
+                }
             }
         });
 
-        // Forgot Password - Step 1: Verify Email
+        // ==========================================
+        // FORGOT PASSWORD - VERIFY EMAIL
+        // ==========================================
         document.getElementById('forgotPasswordForm').addEventListener('submit', function(e) {
             e.preventDefault();
-            const email = document.getElementById('forgotEmail').value;
-            let users = JSON.parse(localStorage.getItem('ahnajak_users')) || [];
+            const email = document.getElementById('forgotEmail').value.trim().toLowerCase();
+            
+            if (!email) {
+                showAlert('error', 'Missing Email', 'Please enter your email address.');
+                return;
+            }
+
+            const users = JSON.parse(localStorage.getItem('ahnajak_users')) || [];
             const user = users.find(u => u.email === email);
 
-            if (user) {
-                // Check if it's a Google user
-                if (user.isGoogleUser) {
-                    showAlert('This account uses Google Sign-In. Please login with Google.', 'error');
-                    return;
-                }
-
-                // Store email for reset
-                document.getElementById('resetEmail').value = email;
-                
-                // Close forgot modal and open reset modal
-                const forgotModal = bootstrap.Modal.getInstance(document.getElementById('forgotPasswordModal'));
-                forgotModal.hide();
-                
-                setTimeout(() => {
-                    const resetModal = new bootstrap.Modal(document.getElementById('resetPasswordModal'));
-                    resetModal.show();
-                    showAlert('Email verified! Please create a new password.', 'success');
-                }, 300);
-            } else {
-                showAlert('Email not found! Please check and try again.', 'error');
+            if (!user) {
+                showAlert('error', 'Email Not Found', 'No account exists with this email. Please register first.');
+                return;
             }
+
+            if (user.isGoogleUser) {
+                showAlert('error', 'Google Account', 'This account uses Google Sign-In. No password to reset. Please login with Google.');
+                return;
+            }
+
+            // Store email and switch modals
+            document.getElementById('resetEmail').value = email;
+            
+            const forgotModalEl = document.getElementById('forgotPasswordModal');
+            const forgotModal = bootstrap.Modal.getInstance(forgotModalEl);
+            forgotModal.hide();
+            
+            setTimeout(() => {
+                const resetModal = new bootstrap.Modal(document.getElementById('resetPasswordModal'));
+                resetModal.show();
+                showAlert('success', 'Email Verified', 'Account found! Please create a new password.');
+            }, 400);
         });
 
-        // Reset Password - Step 2: Set New Password
+        // ==========================================
+        // RESET PASSWORD
+        // ==========================================
         document.getElementById('resetPasswordForm').addEventListener('submit', function(e) {
             e.preventDefault();
             const email = document.getElementById('resetEmail').value;
             const newPassword = document.getElementById('newPassword').value;
             const confirmPassword = document.getElementById('confirmPassword').value;
 
-            // Validate passwords match
-            if (newPassword !== confirmPassword) {
-                showAlert('Passwords do not match!', 'error');
-                return;
-            }
-
-            // Validate password length
             if (newPassword.length < 6) {
-                showAlert('Password must be at least 6 characters!', 'error');
+                showAlert('error', 'Weak Password', 'Password must be at least 6 characters long.');
                 return;
             }
 
-            // Update password in localStorage
+            if (newPassword !== confirmPassword) {
+                showAlert('error', 'Mismatch', 'Passwords do not match. Please try again.');
+                return;
+            }
+
             let users = JSON.parse(localStorage.getItem('ahnajak_users')) || [];
             const userIndex = users.findIndex(u => u.email === email);
             
@@ -406,42 +581,79 @@
                 users[userIndex].password = newPassword;
                 localStorage.setItem('ahnajak_users', JSON.stringify(users));
                 
-                // Close modal
-                const resetModal = bootstrap.Modal.getInstance(document.getElementById('resetPasswordModal'));
+                const resetModalEl = document.getElementById('resetPasswordModal');
+                const resetModal = bootstrap.Modal.getInstance(resetModalEl);
                 resetModal.hide();
-                
-                showAlert('Password reset successful! Please login with your new password.', 'success');
                 
                 // Reset forms
                 document.getElementById('forgotPasswordForm').reset();
                 document.getElementById('resetPasswordForm').reset();
-                
-                // Pre-fill login email
                 document.getElementById('loginEmail').value = email;
+                
+                showAlert('success', 'Password Reset!', 'Your password has been updated. Please login with your new password.');
             } else {
-                showAlert('Error updating password. Please try again.', 'error');
+                showAlert('error', 'Error', 'Could not update password. Please try again.');
             }
         });
 
-        // Show alert function
-        function showAlert(msg, type) {
-            const alertDiv = document.createElement('div');
-            alertDiv.className = `alert alert-${type === 'success' ? 'success' : 'danger'} alert-dismissible fade show`;
-            alertDiv.style.position = 'fixed';
-            alertDiv.style.top = '20px';
-            alertDiv.style.right = '20px';
-            alertDiv.style.zIndex = '9999';
-            alertDiv.style.minWidth = '300px';
-            alertDiv.style.boxShadow = '0 10px 30px rgba(0,0,0,0.2)';
-            alertDiv.style.borderRadius = '12px';
-            alertDiv.innerHTML = `
-                <i class="bi bi-${type === 'success' ? 'check-circle' : 'exclamation-circle'}"></i> ${msg}
-                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-            `;
-            document.body.appendChild(alertDiv);
-            setTimeout(() => alertDiv.remove(), 4000);
+        // ==========================================
+        // PASSWORD TOGGLE
+        // ==========================================
+        function togglePassword(inputId, btn) {
+            const input = document.getElementById(inputId);
+            const icon = btn.querySelector('i');
+            if (input.type === 'password') {
+                input.type = 'text';
+                icon.classList.remove('bi-eye');
+                icon.classList.add('bi-eye-slash');
+            } else {
+                input.type = 'password';
+                icon.classList.remove('bi-eye-slash');
+                icon.classList.add('bi-eye');
+            }
         }
+
+        // ==========================================
+        // CUSTOM ALERT SYSTEM
+        // ==========================================
+        function showAlert(type, title, message) {
+            const container = document.getElementById('alertContainer');
+            
+            // Remove existing alerts
+            container.innerHTML = '';
+            
+            const alertDiv = document.createElement('div');
+            alertDiv.className = `custom-alert alert-${type}-custom`;
+            alertDiv.innerHTML = `
+                <i class="bi bi-${type === 'success' ? 'check-circle-fill' : 'exclamation-triangle-fill'} alert-icon"></i>
+                <div class="alert-content">
+                    <strong>${title}</strong>
+                    <span>${message}</span>
+                </div>
+                <button class="btn-close-alert" onclick="this.parentElement.remove()">×</button>
+            `;
+            
+            container.appendChild(alertDiv);
+            
+            // Auto remove after 4 seconds
+            setTimeout(() => {
+                if (alertDiv.parentElement) {
+                    alertDiv.style.animation = 'fadeOut 0.4s ease forwards';
+                    setTimeout(() => alertDiv.remove(), 400);
+                }
+            }, 4000);
+        }
+
+        // ==========================================
+        // AUTO-CHECK SESSION ON LOAD
+        // ==========================================
+        document.addEventListener('DOMContentLoaded', function() {
+            const currentUser = JSON.parse(localStorage.getItem('current_user'));
+            if (currentUser && currentUser.email) {
+                // User already logged in, redirect
+                window.location.href = '../../index.html';
+            }
+        });
     </script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
