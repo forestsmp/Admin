@@ -3,36 +3,459 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Purchases - AHNAJAK CODE</title>
+    <title>My Purchases</title>
     
     <!-- Favicon -->
-    <link rel="icon" type="image/png" href="../assets/images/logo-website.png">
+    <link rel="icon" type="image/png" href="https://i.ibb.co/S4vrvBq8/logo-website.png">
     
     <!-- Bootstrap & Icons -->
-    <link href="../assets/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
     
-    <!-- Custom CSS -->
-    <link rel="stylesheet" href="../assets/css/purchase.css">
-    
+    <!-- HTML2PDF Library for Download -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+
     <style>
-        :root {
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+        
+        :root { 
             --primary-color: #667eea;
+            --secondary-color: #764ba2;
             --success-color: #11998e;
+            --danger-color: #ee0979;
             --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --success-gradient: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
         }
-        body {
-            font-family: 'Poppins', sans-serif;
+        
+        body { 
+            font-family: 'Poppins', sans-serif; 
             background: linear-gradient(135deg, #f0f9ff 0%, #e6f7ff 100%);
+            min-height: 100vh;
             padding-bottom: 60px;
         }
+
+        /* Header Styles */
         .page-header {
             text-align: center;
-            margin-bottom: 40px;
-            padding-top: 30px;
+            padding: 40px 20px;
+            margin-bottom: 30px;
         }
         .page-header h1 {
             font-size: 2.5rem;
+            font-weight: 700;
             background: var(--primary-gradient);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+            margin-bottom: 10px;
+        }
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 600;
+            padding: 10px 20px;
+            border-radius: 50px;
+            background: white;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            transition: all 0.3s;
+            margin-bottom: 20px;
+        }
+        .back-link:hover { transform: translateX(-5px); box-shadow: 0 6px 20px rgba(0,0,0,0.1); }
+
+        /* Order Card Styles */
+        .order-card {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 25px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.05);
+            border-left: 6px solid var(--primary-color);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        .order-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 50px rgba(0,0,0,0.1);
+        }
+        
+        .order-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            gap: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px dashed #eee;
+        }
+        .order-id { font-weight: 700; color: var(--primary-color); font-size: 1.3rem; }
+        .order-date { color: #718096; font-size: 0.9rem; display: flex; align-items: center; gap: 5px; }
+        
+        .status-badge {
+            padding: 6px 16px;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .status-completed { background: #e6fffa; color: var(--success-color); }
+        .status-pending { background: #fffbeb; color: #d69e2e; }
+        .status-cancelled { background: #fef2f2; color: var(--danger-color); }
+
+        /* Items List */
+        .order-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px solid #f7fafc;
+        }
+        .order-item:last-child { border-bottom: none; }
+        .item-name { font-weight: 600; color: #2d3748; }
+        .item-qty { color: #a0aec0; font-size: 0.9rem; margin-left: 8px; }
+        .item-price { font-weight: 600; color: #4a5568; }
+
+        /* Summary Section */
+        .order-summary {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 2px solid #f0f0f0;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 8px;
+        }
+        .summary-row { display: flex; gap: 40px; font-size: 0.95rem; color: #718096; }
+        .total-row { 
+            display: flex; gap: 40px; font-size: 1.4rem; font-weight: 700; color: var(--primary-color); margin-top: 5px; 
+        }
+
+        /* Action Buttons */
+        .btn-download {
+            background: var(--success-gradient);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 20px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            width: 100%;
+            justify-content: center;
+        }
+        .btn-download:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(17, 153, 142, 0.3); color: white; }
+
+        /* Empty State */
+        .empty-state { text-align: center; padding: 80px 20px; }
+        .empty-icon { font-size: 5rem; color: #cbd5e0; margin-bottom: 20px; }
+
+        /* Invoice Preview Modal Styling */
+        .invoice-preview { padding: 40px; background: white; }
+        .invoice-header { text-align: center; margin-bottom: 40px; border-bottom: 2px solid #f0f0f0; padding-bottom: 20px; }
+        .invoice-logo { height: 50px; margin-bottom: 10px; }
+        .invoice-title { font-size: 2rem; font-weight: 800; color: #2d3748; letter-spacing: 1px; }
+        .invoice-meta { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin-bottom: 30px; }
+        .meta-group h6 { color: #a0aec0; font-size: 0.8rem; text-transform: uppercase; margin-bottom: 5px; }
+        .meta-group p { font-weight: 600; color: #2d3748; margin: 0; font-size: 1.1rem; }
+
+        @media (max-width: 768px) {
+            .page-header h1 { font-size: 1.8rem; }
+            .order-header { flex-direction: column; align-items: flex-start; }
+            .invoice-meta { grid-template-columns: 1fr; gap: 15px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- Navigation -->
+        <div class="d-flex justify-content-between align-items-center mt-4">
+            <a href="../index.html" class="back-link">
+                <i class="bi bi-arrow-left"></i> Back to Shopping
+            </a>
+            <div id="userInfo" class="fw-bold text-muted d-none d-md-block"></div>
+        </div>
+
+        <!-- Header -->
+        <div class="page-header">
+            <h1><i class="bi bi-receipt-cutoff"></i> My Purchases</h1>
+            <p class="text-muted">Track your orders and download invoices anytime</p>
+        </div>
+
+        <!-- Orders Container -->
+        <div id="ordersList">
+            <div class="text-center py-5">
+                <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status"></div>
+                <p class="mt-3 text-muted">Loading purchase history...</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Invoice Modal (Hidden by default) -->
+    <div class="modal fade" id="invoiceModal" tabindex="-1">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content" style="border-radius: 20px; border: none;">
+                <div class="modal-header" style="background: var(--primary-gradient); color: white; border-radius: 20px 20px 0 0;">
+                    <h5 class="modal-title"><i class="bi bi-file-earmark-text me-2"></i>Invoice Preview</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body p-0">
+                    <div id="invoiceContent" class="invoice-preview">
+                        <!-- Content will be injected here -->
+                    </div>
+                </div>
+                <div class="modal-footer p-4">
+                    <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn-download" style="width: auto; margin: 0;" onclick="downloadCurrentInvoice()">
+                        <i class="bi bi-download"></i> Download PDF
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // ================= CONFIGURATION =================
+        const API_URL = 'https://payment.forestsmp.site/api';
+        let currentUser = null;
+        let currentOrders = [];
+        let invoiceModal;
+
+        // ================= INITIALIZATION =================
+        document.addEventListener('DOMContentLoaded', () => {
+            invoiceModal = new bootstrap.Modal(document.getElementById('invoiceModal'));
+            checkAuth();
+            loadOrders();
+        });
+
+        function checkAuth() {
+            const saved = localStorage.getItem('current_user');
+            if (!saved) {
+                alert('Please login to view your purchases.');
+                window.location.href = '../login/login.html';
+                return;
+            }
+            currentUser = JSON.parse(saved);
+            document.getElementById('userInfo').textContent = `👋 Hello, ${currentUser.name}`;
+        }
+
+        // ================= LOAD ORDERS =================
+        async function loadOrders() {
+            const container = document.getElementById('ordersList');
+            
+            try {
+                // Try fetching from API first
+                let orders = [];
+                try {
+                    const res = await fetch(`${API_URL}/orders?email=${encodeURIComponent(currentUser.email)}`);
+                    if(res.ok) orders = await res.json();
+                } catch(e) { console.log('API not available, using local storage'); }
+
+                // Fallback to LocalStorage if API fails or returns empty
+                if (!orders || orders.length === 0) {
+                    orders = JSON.parse(localStorage.getItem('ahnajak_orders')) || [];
+                    // Filter only current user's orders if stored globally
+                    orders = orders.filter(o => o.customer_email === currentUser.email || !o.customer_email);
+                }
+
+                currentOrders = orders;
+                renderOrders(orders);
+
+            } catch (error) {
+                container.innerHTML = `
+                    <div class="alert alert-danger text-center">
+                        <i class="bi bi-exclamation-triangle-fill me-2"></i>
+                        Failed to load orders. Please try again later.
+                    </div>`;
+            }
+        }
+
+        // ================= RENDER UI =================
+        function renderOrders(orders) {
+            const container = document.getElementById('ordersList');
+            
+            if (!orders || orders.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <i class="bi bi-bag-x empty-icon"></i>
+                        <h3>No Orders Found</h3>
+                        <p class="text-muted mb-4">You haven't made any purchases yet.</p>
+                        <a href="../index.html" class="btn-download" style="width: auto; display: inline-flex; text-decoration: none;">
+                            <i class="bi bi-shop"></i> Start Shopping Now
+                        </a>
+                    </div>`;
+                return;
+            }
+
+            // Sort by date (newest first)
+            orders.sort((a, b) => new Date(b.created_at || b.date) - new Date(a.created_at || a.date));
+
+            container.innerHTML = orders.map(order => {
+                const date = new Date(order.created_at || order.date).toLocaleDateString('en-US', { 
+                    year: 'numeric', month: 'long', day: 'numeric' 
+                });
+                const status = (order.status || 'completed').toLowerCase();
+                
+                return `
+                <div class="order-card" id="order-${order.order_id || order.id}">
+                    <div class="order-header">
+                        <div>
+                            <div class="order-id">#${order.order_id || order.id}</div>
+                            <div class="order-date"><i class="bi bi-calendar3"></i> ${date}</div>
+                        </div>
+                        <span class="status-badge status-${status}">${status}</span>
+                    </div>
+
+                    <div class="items-list">
+                        ${(order.items || []).map(item => `
+                            <div class="order-item">
+                                <div>
+                                    <span class="item-name">${item.name || 'Product'}</span>
+                                    <span class="item-qty">x${item.quantity}</span>
+                                </div>
+                                <div class="item-price">$${((item.price || 0) * item.quantity).toFixed(2)}</div>
+                            </div>
+                        `).join('')}
+                    </div>
+
+                    <div class="order-summary">
+                        <div class="summary-row">
+                            <span>Subtotal:</span>
+                            <span>$${(order.subtotal || order.total_price || 0).toFixed(2)}</span>
+                        </div>
+                        ${order.discount_amount > 0 ? `
+                        <div class="summary-row text-success">
+                            <span>Discount:</span>
+                            <span>-$${order.discount_amount.toFixed(2)}</span>
+                        </div>` : ''}
+                        <div class="total-row">
+                            <span>Total Paid:</span>
+                            <span>$${(order.total_price || 0).toFixed(2)}</span>
+                        </div>
+                    </div>
+
+                    <button class="btn-download" onclick="showInvoice('${order.order_id || order.id}')">
+                        <i class="bi bi-file-earmark-pdf-fill"></i> View & Download Invoice
+                    </button>
+                </div>`;
+            }).join('');
+        }
+
+        // ================= INVOICE GENERATION =================
+        function showInvoice(orderId) {
+            const order = currentOrders.find(o => (o.order_id || o.id) === orderId);
+            if (!order) return alert('Order not found!');
+
+            const date = new Date(order.created_at || order.date).toLocaleString();
+            
+            // Generate Professional Invoice HTML
+            const invoiceHTML = `
+                <div class="invoice-header">
+                    <img src="https://i.ibb.co/S4vrvBq8/logo-website.png" alt="Logo" class="invoice-logo">
+                    <div class="invoice-title">AHNAJAK CODE</div>
+                    <p style="color:#718096; margin-top:5px;">Official Purchase Receipt</p>
+                </div>
+
+                <div class="invoice-meta">
+                    <div class="meta-group">
+                        <h6>Bill To</h6>
+                        <p>${currentUser?.name || order.customer_name || 'Customer'}</p>
+                        <p style="font-size:0.9rem; color:#718096;">${currentUser?.email || order.customer_email || ''}</p>
+                    </div>
+                    <div class="meta-group" style="text-align:right;">
+                        <h6>Order Details</h6>
+                        <p>Invoice #: ${order.order_id || order.id}</p>
+                        <p style="font-size:0.9rem; color:#718096;">Date: ${date}</p>
+                    </div>
+                </div>
+
+                <table class="table table-bordered mt-4">
+                    <thead style="background:#f7fafc;">
+                        <tr>
+                            <th style="padding:15px;">Item Description</th>
+                            <th style="padding:15px; text-align:center;">Qty</th>
+                            <th style="padding:15px; text-align:right;">Unit Price</th>
+                            <th style="padding:15px; text-align:right;">Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        ${(order.items || []).map(item => `
+                            <tr>
+                                <td style="padding:15px;">${item.name}</td>
+                                <td style="padding:15px; text-align:center;">${item.quantity}</td>
+                                <td style="padding:15px; text-align:right;">$${(item.price || 0).toFixed(2)}</td>
+                                <td style="padding:15px; text-align:right;">$${((item.price || 0) * item.quantity).toFixed(2)}</td>
+                            </tr>
+                        `).join('')}
+                    </tbody>
+                </table>
+
+                <div style="display:flex; justify-content:flex-end; margin-top:20px;">
+                    <div style="width:250px;">
+                        <div style="display:flex; justify-content:space-between; padding:8px 0; border-bottom:1px solid #eee;">
+                            <span>Subtotal:</span>
+                            <strong>$${(order.subtotal || order.total_price || 0).toFixed(2)}</strong>
+                        </div>
+                        ${order.discount_amount > 0 ? `
+                        <div style="display:flex; justify-content:space-between; padding:8px 0; border-bottom:1px solid #eee; color:#11998e;">
+                            <span>Discount:</span>
+                            <strong>-$${order.discount_amount.toFixed(2)}</strong>
+                        </div>` : ''}
+                        <div style="display:flex; justify-content:space-between; padding:12px 0; font-size:1.3rem; font-weight:800; color:#2d3748;">
+                            <span>TOTAL:</span>
+                            <span>$${(order.total_price || 0).toFixed(2)}</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="margin-top:40px; text-align:center; color:#a0aec0; font-size:0.8rem; border-top:1px solid #eee; padding-top:20px;">
+                    Thank you for shopping with AHNAJAK CODE!<br>
+                    This is a computer-generated receipt. No signature required.
+                </div>
+            `;
+
+            document.getElementById('invoiceContent').innerHTML = invoiceHTML;
+            invoiceModal.show();
+        }
+
+        function downloadCurrentInvoice() {
+            const element = document.getElementById('invoiceContent');
+            const orderId = document.querySelector('.invoice-meta p:nth-child(2)')?.textContent.replace('Invoice #: ', '') || 'receipt';
+            
+            const opt = {
+                margin:       [10, 10],
+                filename:     `AHNAJAK_Invoice_${orderId}.pdf`,
+                image:        { type: 'jpeg', quality: 0.98 },
+                html2canvas:  { scale: 2, useCORS: true },
+                jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
+            };
+
+            // Show loading state on button
+            const btn = document.querySelector('.modal-footer .btn-download');
+            const originalText = btn.innerHTML;
+            btn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span> Generating...';
+            btn.disabled = true;
+
+            html2pdf().set(opt).from(element).save().then(() => {
+                btn.innerHTML = originalText;
+                btn.disabled = false;
+            }).catch(err => {
+                console.error('PDF Error:', err);
+                btn.innerHTML = originalText;
+                btn.disabled = false;
+                alert('Failed to generate PDF. Please try again.');
+            });
+        }
+    </script>
+</body>
+</html>
