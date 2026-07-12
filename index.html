@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="km">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Shop - Online Shopping</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Hanuman:wght@300;400;700&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Hanuman', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        
+        .navbar {
+            background: rgba(255,255,255,0.95) !important;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+        }
+        
+        .navbar-brand {
+            font-weight: 700;
+            color: #667eea !important;
+            font-size: 1.5rem;
+        }
+        
+        .hero-section {
+            background: linear-gradient(135deg, rgba(102,126,234,0.9) 0%, rgba(118,75,162,0.9) 100%);
+            color: white;
+            padding: 60px 0;
+            text-align: center;
+        }
+        
+        .hero-section h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+        
+        .hero-section p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+        
+        .product-card {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            margin-bottom: 30px;
+        }
+        
+        .product-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+        }
+        
+        .product-img {
+            height: 250px;
+            object-fit: cover;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 4rem;
+        }
+        
+        .product-body {
+            padding: 20px;
+        }
+        
+        .product-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 10px;
+        }
+        
+        .product-desc {
+            color: #666;
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+        }
+        
+        .product-price {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #e74c3c;
+            margin-bottom: 15px;
+        }
+        
+        .btn-buy {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 50px;
+            font-weight: 600;
+            width: 100%;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-buy:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 20px rgba(102,126,234,0.4);
+        }
+        
+        .cart-icon {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            cursor: pointer;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+            z-index: 1000;
+        }
+        
+        .cart-badge {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background: #e74c3c;
+            color: white;
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+        
+        .modal-content {
+            border-radius: 20px;
+            border: none;
+        }
+        
+        .modal-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 20px 20px 0 0;
+        }
+        
+        .form-control {
+            border-radius: 10px;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+        }
+        
+        .form-control:focus {
+            border-color: #667eea;
+            box-shadow: 0 0 0 0.2rem rgba(102,126,234,0.25);
+        }
+        
+        footer {
+            background: rgba(0,0,0,0.8);
+            color: white;
+            text-align: center;
+            padding: 30px 0;
+            margin-top: 50px;
+        }
+    </style>
+</head>
+<body>
+
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-light">
+    <div class="container">
+        <a class="navbar-brand" href="#"><i class="bi bi-cart-fill"></i> My Shop</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="#products">Products</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#cartModal">
+                        <i class="bi bi-cart3"></i> Cart
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<!-- Hero Section -->
+<div class="hero-section">
+    <div class="container">
+        <h1><i class="bi bi-shop"></i> Welcome to My Shop</h1>
+        <p>Discover amazing products at the best prices!</p>
+    </div>
+</div>
+
+<!-- Products Section -->
+<div class="container" id="products">
+    <h2 class="text-white text-center mb-5">Our Products</h2>
+    <div id="products-container" class="row">
+        <div class="col-12 text-center">
+            <div class="spinner-border text-white" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Cart Icon -->
+<div class="cart-icon" data-bs-toggle="modal" data-bs-target="#cartModal">
+    <i class="bi bi-cart3"></i>
+    <span class="cart-badge" id="cartCount">0</span>
+</div>
+
+<!-- Cart Modal -->
+<div class="modal fade" id="cartModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title"><i class="bi bi-cart3"></i> Shopping Cart</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <div id="cart-items">
+                    <p class="text-center text-muted">Your cart is empty</p>
+                </div>
+                <hr>
+                <div class="d-flex justify-content-between">
+                    <h4>Total:</h4>
+                    <h4 class="text-danger" id="cart-total">$0.00</h4>
+                </div>
+                <button class="btn btn-success w-100 mt-3" onclick="showCheckout()">
+                    <i class="bi bi-credit-card"></i> Checkout
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Checkout Modal -->
+<div class="modal fade" id="checkoutModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title"><i class="bi bi-credit-card"></i> Checkout</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <form id="checkout-form" onsubmit="placeOrder(event)">
+                    <div class="mb-3">
+                        <label class="form-label">Full Name *</label>
+                        <input type="text" class="form-control" id="customerName" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Email *</label>
+                        <input type="email" class="form-control" id="customerEmail" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Phone Number</label>
+                        <input type="tel" class="form-control" id="customerPhone">
+                    </div>
+                    <div class="alert alert-info">
+                        <strong>Total Amount:</strong> <span id="checkout-total">$0.00</span>
+                    </div>
+                    <button type="submit" class="btn btn-success w-100">
+                        <i class="bi bi-check-circle"></i> Confirm Order
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Footer -->
+<footer>
+    <div class="container">
+        <p>&copy; 2026 My Shop. All rights reserved.</p>
+        <p><small>Powered by Forest-SMP</small></p>
+    </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+// API Configuration
+const API_URL = 'https://payment.forestsmp.site/api';
+
+// Cart
+let cart = [];
+
+// Load Products
+async function loadProducts() {
+    try {
+        const res = await fetch(`${API_URL}/products`);
+        const products = await res.json();
+        
+        const container = document.getElementById('products-container');
+        container.innerHTML = '';
+        
+        if (products.length === 0) {
+            container.innerHTML = '<div class="col-12 text-center text-white"><h3>No products available</h3></div>';
+            return;
+        }
+        
+        products.forEach(p => {
+            container.innerHTML += `
+                <div class="col-md-4 col-sm-6">
+                    <div class="product-card">
+                        ${p.image_url ? 
+                            `<img src="${p.image_url}" class="product-img" alt="${p.name}">` :
+                            `<div class="product-img"><i class="bi bi-box-seam"></i></div>`
+                        }
+                        <div class="product-body">
+                            <h5 class="product-title">${p.name}</h5>
+                            <p class="product-desc">${p.description || 'No description'}</p>
+                            <div class="product-price">$${p.price.toFixed(2)}</div>
+                            <button class="btn btn-buy" onclick="addToCart(${p.id}, '${p.name}', ${p.price})">
+                                <i class="bi bi-cart-plus"></i> Add to Cart
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `;
+        });
+    } catch (err) {
+        document.getElementById('products-container').innerHTML = 
+            `<div class="col-12 text-center text-white"><div class="alert alert-danger">Error loading products: ${err.message}</div></div>`;
+    }
+}
+
+// Add to Cart
+function addToCart(id, name, price) {
+    const existingItem = cart.find(item => item.id === id);
+    
+    if (existingItem) {
+        existingItem.quantity += 1;
+    } else {
+        cart.push({ id, name, price, quantity: 1 });
+    }
+    
+    updateCart();
+    
+    // Show notification
+    const btn = event.target;
+    const originalText = btn.innerHTML;
+    btn.innerHTML = '<i class="bi bi-check"></i> Added!';
+    btn.classList.remove('btn-buy');
+    btn.classList.add('btn-success');
+    
+    setTimeout(() => {
+        btn.innerHTML = originalText;
+        btn.classList.remove('btn-success');
+        btn.classList.add('btn-buy');
+    }, 1500);
+}
+
+// Update Cart
+function updateCart() {
+    const cartCount = document.getElementById('cartCount');
+    const cartItems = document.getElementById('cart-items');
+    const cartTotal = document.getElementById('cart-total');
+    
+    const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+    const totalPrice = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+    
+    cartCount.textContent = totalItems;
+    cartTotal.textContent = `$${totalPrice.toFixed(2)}`;
+    
+    if (cart.length === 0) {
+        cartItems.innerHTML = '<p class="text-center text-muted">Your cart is empty</p>';
+    } else {
+        cartItems.innerHTML = cart.map(item => `
+            <div class="d-flex justify-content-between align-items-center mb-3 p-3 bg-light rounded">
+                <div>
+                    <strong>${item.name}</strong><br>
+                    <small>$${item.price.toFixed(2)} x ${item.quantity}</small>
+                </div>
+                <div>
+                    <span class="badge bg-primary me-2">$${(item.price * item.quantity).toFixed(2)}</span>
+                    <button class="btn btn-sm btn-danger" onclick="removeFromCart(${item.id})">
+                        <i class="bi bi-trash"></i>
+                    </button>
+                </div>
+            </div>
+        `).join('');
+    }
+}
+
+// Remove from Cart
+function removeFromCart(id) {
+    cart = cart.filter(item => item.id !== id);
+    updateCart();
+}
+
+// Show Checkout
+function showCheckout() {
+    if (cart.length === 0) {
+        alert('Your cart is empty!');
+        return;
+    }
+    
+    const totalPrice = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+    document.getElementById('checkout-total').textContent = `$${totalPrice.toFixed(2)}`;
+    
+    const cartModal = bootstrap.Modal.getInstance(document.getElementById('cartModal'));
+    cartModal.hide();
+    
+    const checkoutModal = new bootstrap.Modal(document.getElementById('checkoutModal'));
+    checkoutModal.show();
+}
+
+// Place Order
+async function placeOrder(e) {
+    e.preventDefault();
+    
+    const orderData = {
+        customer_name: document.getElementById('customerName').value,
+        customer_email: document.getElementById('customerEmail').value,
+        customer_phone: document.getElementById('customerPhone').value,
+        items: cart.map(item => ({
+            product_id: item.id,
+            quantity: item.quantity
+        }))
+    };
+    
+    try {
+        const res = await fetch(`${API_URL}/orders`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(orderData)
+        });
+        
+        if (res.ok) {
+            const result = await res.json();
+            alert(`Order placed successfully!\nOrder ID: ${result.order_id}\nTotal: $${result.total.toFixed(2)}`);
+            cart = [];
+            updateCart();
+            bootstrap.Modal.getInstance(document.getElementById('checkoutModal')).hide();
+            document.getElementById('checkout-form').reset();
+        } else {
+            const error = await res.json();
+            alert(`Error: ${error.error}`);
+        }
+    } catch (err) {
+        alert(`Error placing order: ${err.message}`);
+    }
+}
+
+// Load products on page load
+loadProducts();
+</script>
+
+</body>
+  </html>
