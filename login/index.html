@@ -5,11 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
     
-    <!-- Favicon -->
     <link rel="icon" type="image/png" href="https://i.ibb.co/S4vrvBq8/logo-website.png">
-    
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    
+    <!-- Google Identity Services -->
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+    
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Hanuman:wght@300;400;700&family=Poppins:wght@300;400;600;700&display=swap');
         
@@ -26,6 +28,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            padding: 20px;
         }
         
         .auth-card {
@@ -39,12 +42,7 @@
             border: 1px solid rgba(255,255,255,0.5);
         }
         
-        .auth-title {
-            text-align: center;
-            margin-bottom: 30px;
-            color: #2c3e50;
-        }
-        
+        .auth-title { text-align: center; margin-bottom: 30px; color: #2c3e50; }
         .auth-title h2 {
             background: var(--primary-gradient);
             -webkit-background-clip: text;
@@ -52,43 +50,24 @@
             font-weight: 700;
         }
         
-        .form-control {
-            border-radius: 12px;
-            padding: 12px 15px;
-            border: 2px solid #e2e8f0;
-        }
-        
-        .form-control:focus {
-            border-color: var(--primary-color);
-            box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1);
-        }
+        .form-control { border-radius: 12px; padding: 12px 15px; border: 2px solid #e2e8f0; }
+        .form-control:focus { border-color: var(--primary-color); box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1); }
         
         .btn-auth {
-            background: var(--primary-gradient);
-            color: white;
-            border: none;
-            padding: 12px;
-            border-radius: 50px;
-            font-weight: 600;
-            width: 100%;
-            transition: all 0.3s;
+            background: var(--primary-gradient); color: white; border: none;
+            padding: 12px; border-radius: 50px; font-weight: 600; width: 100%;
+            transition: all 0.3s; margin-top: 10px;
         }
+        .btn-auth:hover { transform: translateY(-2px); box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4); }
         
-        .btn-auth:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
+        .divider {
+            display: flex; align-items: center; text-align: center; margin: 25px 0; color: #718096;
         }
+        .divider::before, .divider::after { content: ''; flex: 1; border-bottom: 1px solid #e2e8f0; }
+        .divider span { padding: 0 15px; font-size: 0.9rem; }
         
-        .auth-link {
-            text-align: center;
-            margin-top: 20px;
-        }
-        
-        .auth-link a {
-            color: var(--primary-color);
-            text-decoration: none;
-            font-weight: 600;
-        }
+        .auth-link { text-align: center; margin-top: 20px; }
+        .auth-link a { color: var(--primary-color); text-decoration: none; font-weight: 600; }
     </style>
 </head>
 <body>
@@ -98,6 +77,29 @@
             <img src="https://i.ibb.co/S4vrvBq8/logo-website.png" alt="Logo" style="height: 60px; margin-bottom: 15px;">
             <h2>Welcome Back</h2>
             <p class="text-muted">Login to your AHNAJAK CODE account</p>
+        </div>
+
+        <!-- Google Sign-In Button -->
+        <div id="g_id_onload"
+             data-client_id="166296204052-ba45pf8lu1tsdfv5590oreeg3daae0s5.apps.googleusercontent.com"
+             data-context="signin"
+             data-ux_mode="popup"
+             data-callback="handleCredentialResponse"
+             data-auto_prompt="false">
+        </div>
+
+        <div class="g_id_signin"
+             data-type="standard"
+             data-shape="rectangular"
+             data-theme="outline"
+             data-text="signin_with"
+             data-size="large"
+             data-logo_alignment="left"
+             data-width="380">
+        </div>
+
+        <div class="divider">
+            <span>OR LOGIN WITH EMAIL</span>
         </div>
 
         <form id="loginForm">
@@ -110,41 +112,99 @@
                 <input type="password" id="loginPassword" class="form-control" placeholder="••••••••" required>
             </div>
             
-            <button type="submit" class="btn-auth mt-3">
+            <button type="submit" class="btn-auth">
                 <i class="bi bi-box-arrow-in-right"></i> Login
             </button>
         </form>
 
         <div class="auth-link">
-            Don't have an account? <a href="../register">Register here</a>
+            Don't have an account? <a href="../register/register.html">Register here</a>
         </div>
     </div>
 
     <script>
+        // Handle Google Sign-In response
+        function handleCredentialResponse(response) {
+            // Decode JWT token
+            const responsePayload = decodeJwtResponse(response.credential);
+
+            console.log("ID: " + responsePayload.sub);
+            console.log('Full Name: ' + responsePayload.name);
+            console.log('Email: ' + responsePayload.email);
+            console.log("Image URL: " + responsePayload.picture);
+
+            // Create user object
+            const googleUser = {
+                name: responsePayload.name,
+                email: responsePayload.email,
+                picture: responsePayload.picture,
+                isGoogleUser: true
+            };
+
+            // Save to localStorage (simulate database)
+            let users = JSON.parse(localStorage.getItem('ahnajak_users')) || [];
+            const existingUser = users.find(u => u.email === googleUser.email);
+            
+            if (!existingUser) {
+                users.push(googleUser);
+                localStorage.setItem('ahnajak_users', JSON.stringify(users));
+            }
+
+            // Set current session
+            localStorage.setItem('current_user', JSON.stringify(googleUser));
+            
+            showAlert(`Welcome, ${responsePayload.name}!`, 'success');
+            setTimeout(() => {
+                window.location.href = '../../index.html';
+            }, 1500);
+        }
+
+        // Decode JWT
+        function decodeJwtResponse(token) {
+            var base64Url = token.split('.')[1];
+            var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+            var jsonPayload = decodeURIComponent(window.atob(base64).split('').map(function(c) {
+                return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+            }).join(''));
+            return JSON.parse(jsonPayload);
+        }
+
+        // Regular email/password login
         document.getElementById('loginForm').addEventListener('submit', function(e) {
             e.preventDefault();
-            
             const email = document.getElementById('loginEmail').value;
             const password = document.getElementById('loginPassword').value;
-
-            // ទាញយកទិន្នន័យ User ពី LocalStorage
             let users = JSON.parse(localStorage.getItem('ahnajak_users')) || [];
-            
-            // ស្វែងរក User ដែលត្រូវនឹង Email និង Password
             const user = users.find(u => u.email === email && u.password === password);
 
             if (user) {
-                // រក្សាទុក Session បច្ចុប្បន្ន
                 localStorage.setItem('current_user', JSON.stringify(user));
-                
-                alert('Login បានជោគជ័យ!');
-                // Redirect ទៅកាន់ទំព័រដើម (ឧទាហរណ៍ index.html នៅ root)
-                // ប្រសិនបើអ្នកមាន file index.html នៅខាងក្រៅ folder login
-                window.location.href = '../..'; 
+                showAlert('Login successful!', 'success');
+                setTimeout(() => {
+                    window.location.href = '../../index.html';
+                }, 1500);
             } else {
-                alert('Email ឬ Password មិនត្រឹមត្រូវ!');
+                showAlert('Email or Password incorrect!', 'error');
             }
         });
+
+        // Show alert function
+        function showAlert(msg, type) {
+            const alertDiv = document.createElement('div');
+            alertDiv.className = `alert alert-${type === 'success' ? 'success' : 'danger'} alert-dismissible fade show`;
+            alertDiv.style.position = 'fixed';
+            alertDiv.style.top = '20px';
+            alertDiv.style.right = '20px';
+            alertDiv.style.zIndex = '9999';
+            alertDiv.style.minWidth = '300px';
+            alertDiv.innerHTML = `
+                ${msg}
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            `;
+            document.body.appendChild(alertDiv);
+            setTimeout(() => alertDiv.remove(), 4000);
+        }
     </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
