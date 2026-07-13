@@ -2,7 +2,7 @@
   "rewrites": [
     {
       "source": "/share/:username/:code",
-      "destination": "/share/profile.html"
+      "destination": "/share/profile"
     }
   ],
   "headers": [
