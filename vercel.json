@@ -1,0 +1,19 @@
+{
+  "rewrites": [
+    {
+      "source": "/share/:username/:code",
+      "destination": "/share.html"
+    }
+  ],
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        {
+          "key": "X-Content-Type-Options",
+          "value": "nosniff"
+        }
+      ]
+    }
+  ]
+}
