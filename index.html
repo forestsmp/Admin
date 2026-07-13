@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AHNAJAK CODE</title>
+    <title>AHNAJAK CODE - Online Shopping</title>
     
     <!-- Favicon -->
     <link rel="icon" type="image/png" href="https://i.ibb.co/S4vrvBq8/logo-website.png">
@@ -633,12 +633,12 @@
                 <ul class="navbar-nav ms-auto align-items-lg-center">
                     <!-- Products Link -->
                     <li class="nav-item">
-                        <a class="nav-link" href="../.."><i class="bi bi-grid me-1"></i> Products</a>
+                        <a class="nav-link" href="../../index.html"><i class="bi bi-grid me-1"></i> Products</a>
                     </li>
                     
                     <!-- My Purchase Link -->
                     <li class="nav-item">
-                        <a class="nav-link" href="../purchase"><i class="bi bi-bag-check me-1"></i> My Purchase</a>
+                        <a class="nav-link" href="../../purchase/index.html"><i class="bi bi-bag-check me-1"></i> My Purchase</a>
                     </li>
 
                     <!-- Cart -->
@@ -649,11 +649,11 @@
                         </a>
                     </li>
 
-                    <!-- Auth Section (Not Logged In) -->
+                    <!-- Auth Section (Not Logged In) - CHANGED TO LINK -->
                     <li class="nav-item" id="authSection">
-                        <button class="btn btn-outline-primary ms-lg-2 mt-2 mt-lg-0" onclick="showAuthModal('login')">
+                        <a class="btn btn-outline-primary ms-lg-2 mt-2 mt-lg-0 text-decoration-none" href="../login">
                             <i class="bi bi-box-arrow-in-right"></i> Login
-                        </button>
+                        </a>
                     </li>
 
                     <!-- Account Dropdown (Logged In) -->
@@ -706,56 +706,6 @@
             <p class="mb-0">&copy; 2026 AHNAJAK CODE. All rights reserved.</p>
         </div>
     </footer>
-
-    <!-- Auth Modal -->
-    <div class="modal fade" id="authModal" tabindex="-1">
-        <div class="modal-dialog"><div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="authModalTitle">
-                    <i class="bi bi-box-arrow-in-right"></i> Login
-                </h5>
-                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
-            </div>
-            <div class="modal-body">
-                <form id="loginForm" onsubmit="login(event)">
-                    <div class="mb-3">
-                        <label class="form-label fw-bold"><i class="bi bi-envelope"></i> Email</label>
-                        <input type="email" id="loginEmail" class="form-control" placeholder="your@email.com" required>
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label fw-bold"><i class="bi bi-lock"></i> Password</label>
-                        <input type="password" id="loginPassword" class="form-control" placeholder="••••••••" required>
-                    </div>
-                    <button type="submit" class="btn-auth">
-                        <i class="bi bi-box-arrow-in-right"></i> Login
-                    </button>
-                    <p class="text-center mt-3">
-                        No account? <a href="#" onclick="toggleAuthMode()" style="color: var(--primary-color); font-weight: 600;">Register</a>
-                    </p>
-                </form>
-                <form id="registerForm" onsubmit="register(event)" style="display:none;">
-                    <div class="mb-3">
-                        <label class="form-label fw-bold"><i class="bi bi-person"></i> Full Name</label>
-                        <input type="text" id="regName" class="form-control" placeholder="Your Name" required>
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label fw-bold"><i class="bi bi-envelope"></i> Email</label>
-                        <input type="email" id="regEmail" class="form-control" placeholder="your@email.com" required>
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label fw-bold"><i class="bi bi-lock"></i> Password</label>
-                        <input type="password" id="regPassword" class="form-control" placeholder="••••••••" required>
-                    </div>
-                    <button type="submit" class="btn-auth">
-                        <i class="bi bi-person-plus"></i> Register
-                    </button>
-                    <p class="text-center mt-3">
-                        Have account? <a href="#" onclick="toggleAuthMode()" style="color: var(--primary-color); font-weight: 600;">Login</a>
-                    </p>
-                </form>
-            </div>
-        </div></div>
-    </div>
 
     <!-- Edit Profile Modal -->
     <div class="modal fade" id="editModal" tabindex="-1">
@@ -889,7 +839,7 @@
         const API_URL = 'https://payment.forestsmp.site/api';
         let cart = [];
         let currentUser = null;
-        let authModal, cartModal, checkoutModal, editModal;
+        let cartModal, checkoutModal, editModal;
         let appliedDiscount = 0;
         let discountCode = '';
         let subtotal = 0;
@@ -898,7 +848,6 @@
         const DEFAULT_IMAGE = 'https://i.ibb.co/5Cv1FL1/Screenshot-2026-0712-140422.png';
 
         document.addEventListener('DOMContentLoaded', function() {
-            authModal = new bootstrap.Modal(document.getElementById('authModal'));
             cartModal = new bootstrap.Modal(document.getElementById('cartModal'));
             checkoutModal = new bootstrap.Modal(document.getElementById('checkoutModal'));
             editModal = new bootstrap.Modal(document.getElementById('editModal'));
@@ -977,10 +926,13 @@
             }
         }
 
+        // ✅ UPDATED: Redirect to login page instead of showing modal
         function addToCart(id, name, price) {
             if(!currentUser) { 
-                showAlert('Please login first!', 'error'); 
-                showAuthModal('login'); 
+                showAlert('Please login first to add items to cart!', 'error'); 
+                setTimeout(() => {
+                    window.location.href = '../login';
+                }, 800);
                 return; 
             }
             
@@ -1112,12 +1064,20 @@
             showAlert('Discount removed', 'success');
         }
 
+        // ✅ UPDATED: Redirect to login if not logged in
         function showCheckoutModal() {
-            if(cart.length === 0) { showAlert('Cart is empty!', 'error'); return; }
-            if(currentUser) {
-                document.getElementById('checkoutName').value = currentUser.name || '';
-                document.getElementById('checkoutEmail').value = currentUser.email || '';
+            if(!currentUser) {
+                showAlert('Please login first to checkout!', 'error');
+                setTimeout(() => {
+                    window.location.href = '../login/login.html';
+                }, 800);
+                return;
             }
+            if(cart.length === 0) { showAlert('Cart is empty!', 'error'); return; }
+            
+            document.getElementById('checkoutName').value = currentUser.name || '';
+            document.getElementById('checkoutEmail').value = currentUser.email || '';
+            
             cartModal.hide();
             checkoutModal.show();
         }
@@ -1161,53 +1121,6 @@
                 showAlert('Network error. Please check your connection.', 'error'); 
                 console.error(err);
             }
-        }
-
-        function showAuthModal(mode) {
-            document.getElementById('authModalTitle').innerHTML = mode === 'login' ? '<i class="bi bi-box-arrow-in-right"></i> Login' : '<i class="bi bi-person-plus"></i> Register';
-            document.getElementById('loginForm').style.display = mode === 'login' ? 'block' : 'none';
-            document.getElementById('registerForm').style.display = mode === 'register' ? 'block' : 'none';
-            authModal.show();
-        }
-
-        function toggleAuthMode() {
-            const loginForm = document.getElementById('loginForm');
-            const isLogin = loginForm.style.display !== 'none';
-            loginForm.style.display = isLogin ? 'none' : 'block';
-            document.getElementById('registerForm').style.display = isLogin ? 'block' : 'none';
-            document.getElementById('authModalTitle').innerHTML = isLogin ? '<i class="bi bi-person-plus"></i> Register' : '<i class="bi bi-box-arrow-in-right"></i> Login';
-        }
-
-        async function login(e) {
-            e.preventDefault();
-            try {
-                const res = await fetch(`${API_URL}/auth/login`, { method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify({ email: document.getElementById('loginEmail').value, password: document.getElementById('loginPassword').value }) });
-                const data = await res.json();
-                if(res.ok) {
-                    currentUser = data.user;
-                    localStorage.setItem('current_user', JSON.stringify(currentUser));
-                    updateAuthUI();
-                    showAlert('Login successful! Welcome back.', 'success');
-                    authModal.hide();
-                    document.getElementById('loginForm').reset();
-                } else { showAlert(data.error || 'Login failed', 'error'); }
-            } catch(e) { showAlert('Connection error', 'error'); }
-        }
-
-        async function register(e) {
-            e.preventDefault();
-            try {
-                const res = await fetch(`${API_URL}/auth/register`, { method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify({ name: document.getElementById('regName').value, email: document.getElementById('regEmail').value, password: document.getElementById('regPassword').value }) });
-                const data = await res.json();
-                if(res.ok) {
-                    currentUser = data.user;
-                    localStorage.setItem('current_user', JSON.stringify(currentUser));
-                    updateAuthUI();
-                    showAlert('Registration successful! Welcome.', 'success');
-                    authModal.hide();
-                    document.getElementById('registerForm').reset();
-                } else { showAlert(data.error || 'Registration failed', 'error'); }
-            } catch(e) { showAlert('Connection error', 'error'); }
         }
 
         function logout() {
