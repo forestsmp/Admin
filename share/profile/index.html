@@ -109,22 +109,6 @@
             overflow: hidden;
         }
         
-        .avatar::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: var(--primary-gradient);
-            opacity: 0;
-            transition: opacity 0.3s;
-        }
-        
-        .avatar:hover::before {
-            opacity: 0.1;
-        }
-        
         .verified-badge {
             position: absolute;
             bottom: 5px;
@@ -265,6 +249,27 @@
             border: 2px dashed #cbd5e0;
         }
         
+        .error-state {
+            text-align: center;
+            padding: 60px 40px;
+        }
+        
+        .error-icon {
+            font-size: 5rem;
+            margin-bottom: 20px;
+            opacity: 0.5;
+        }
+        
+        .error-state h2 {
+            color: #e74c3c;
+            margin-bottom: 15px;
+        }
+        
+        .error-state p {
+            color: #718096;
+            margin-bottom: 25px;
+        }
+        
         @media (max-width: 768px) {
             .profile-card { margin: 10px; }
             .header-bg { height: 150px; }
@@ -277,100 +282,117 @@
     </style>
 </head>
 <body>
-    <div class="profile-card">
-        <div class="header-bg">
-            <div class="avatar-container">
-                <div class="avatar" id="pAvatar">U</div>
-                <div class="verified-badge">
-                    <i class="bi bi-check-lg"></i>
-                </div>
-            </div>
-        </div>
-        
-        <div class="info">
-            <div class="badge-share">
-                <i class="bi bi-share-fill"></i>
-                Shared Profile
-            </div>
-            
-            <h1 class="user-name" id="pName">Loading...</h1>
-            <p class="user-email" id="pEmail">...</p>
-            
-            <div class="stats-row">
-                <div class="stat-box">
-                    <div class="stat-value">👤</div>
-                    <div class="stat-label">Member</div>
-                </div>
-                <div class="stat-box">
-                    <div class="stat-value">🛍️</div>
-                    <div class="stat-label">Shopper</div>
-                </div>
-                <div class="stat-box">
-                    <div class="stat-value">⭐</div>
-                    <div class="stat-label">Verified</div>
-                </div>
-            </div>
-            
-            <div class="actions">
-                <a href="/index.html" class="btn-custom btn-primary-custom">
-                    <i class="bi bi-shop"></i>
-                    Visit Shop
-                </a>
-                <button onclick="window.history.back()" class="btn-custom btn-secondary-custom">
-                    <i class="bi bi-arrow-left"></i>
-                    Go Back
-                </button>
-            </div>
-            
-            <div class="share-code" id="shareCode">
-                <i class="bi bi-link-45deg"></i> Share Code: Loading...
-            </div>
-        </div>
+    <div class="profile-card" id="profileCard">
+        <!-- Content will be injected by JavaScript -->
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            const params = new URLSearchParams(window.location.search);
-            const username = decodeURIComponent(params.get('user') || '');
-            const code = params.get('code') || '';
+            const path = window.location.pathname;
+            const parts = path.split('/').filter(p => p);
             
-            console.log('📄 Profile page loaded for:', { username, code });
+            console.log('🔍 Path:', path);
+            console.log('📦 Parts:', parts);
             
-            const viewingData = JSON.parse(localStorage.getItem('viewing_profile'));
-            
-            if (viewingData && viewingData.shareCode === code) {
-                displayProfile(viewingData, code);
-            } else {
-                console.log(' Searching for user in storage...');
+            // ពិនិត្យថាតើជា /share/username/code ឬអត់
+            if (parts[0] === 'share' && parts.length >= 3) {
+                const username = decodeURIComponent(parts[1]);
+                const code = parts[2];
+                
+                console.log('👤 Searching for user:', { username, code });
+                
+                // ស្វែងរក User ក្នុង LocalStorage
                 const users = JSON.parse(localStorage.getItem('ahnajak_users')) || [];
-                const user = users.find(u => {
-                    const slug = (u.name || '').toLowerCase().replace(/\s+/g, '-');
-                    return slug === username.toLowerCase();
+                console.log('💾 Total users:', users.length);
+                
+                const targetUser = users.find(u => {
+                    const userNameSlug = (u.name || '').toLowerCase().replace(/\s+/g, '-');
+                    const userEmailSlug = (u.email || '').split('@')[0].toLowerCase();
+                    const matchName = userNameSlug === username.toLowerCase();
+                    const matchEmail = userEmailSlug === username.toLowerCase();
+                    
+                    console.log(`✓ Checking: ${u.name}`, { matchName, matchEmail });
+                    return matchName || matchEmail;
                 });
                 
-                if (user) {
-                    displayProfile(user, code);
+                if (targetUser) {
+                    console.log('✅ User found:', targetUser);
+                    renderProfile(targetUser, code);
                 } else {
-                    showError();
+                    console.log('❌ User NOT found');
+                    renderError(username, code);
                 }
+            } else {
+                console.log('⚠️ Invalid URL');
+                renderError('', '');
             }
         });
         
-        function displayProfile(user, code) {
-            document.getElementById('pName').textContent = user.name || 'User';
-            document.getElementById('pEmail').textContent = user.email || '';
-            document.getElementById('pAvatar').textContent = (user.name || 'U').charAt(0).toUpperCase();
-            document.getElementById('shareCode').innerHTML = `<i class="bi bi-link-45deg"></i> Share Code: ${code}`;
+        function renderProfile(user, code) {
+            const avatar = (user.name || 'U').charAt(0).toUpperCase();
+            const name = user.name || 'User';
+            const email = user.email || '';
             
-            document.title = `${user.name} - AHNAJAK CODE`;
+            document.getElementById('profileCard').innerHTML = `
+                <div class="header-bg">
+                    <div class="avatar-container">
+                        <div class="avatar">${avatar}</div>
+                        <div class="verified-badge"><i class="bi bi-check-lg"></i></div>
+                    </div>
+                </div>
+                <div class="info">
+                    <div class="badge-share"><i class="bi bi-share-fill"></i> Shared Profile</div>
+                    <h1 class="user-name">${name}</h1>
+                    <p class="user-email">${email}</p>
+                    
+                    <div class="stats-row">
+                        <div class="stat-box">
+                            <div class="stat-value">👤</div>
+                            <div class="stat-label">Member</div>
+                        </div>
+                        <div class="stat-box">
+                            <div class="stat-value">🛍️</div>
+                            <div class="stat-label">Shopper</div>
+                        </div>
+                        <div class="stat-box">
+                            <div class="stat-value">⭐</div>
+                            <div class="stat-label">Verified</div>
+                        </div>
+                    </div>
+                    
+                    <div class="actions">
+                        <a href="../../index.html" class="btn-custom btn-primary-custom">
+                            <i class="bi bi-shop"></i> Visit Shop
+                        </a>
+                        <button onclick="window.history.back()" class="btn-custom btn-secondary-custom">
+                            <i class="bi bi-arrow-left"></i> Go Back
+                        </button>
+                    </div>
+                    
+                    <div class="share-code">
+                        <i class="bi bi-link-45deg"></i> Share Code: ${code}
+                    </div>
+                </div>
+            `;
+            
+            document.title = `${name} - AHNAJAK CODE`;
         }
         
-        function showError() {
-            document.getElementById('pName').textContent = 'Unknown User';
-            document.getElementById('pEmail').textContent = 'This profile does not exist or has been removed.';
-            document.getElementById('pAvatar').textContent = '?';
-            document.getElementById('shareCode').innerHTML = '<i class="bi bi-exclamation-triangle"></i> Invalid Link';
+        function renderError(username, code) {
+            document.getElementById('profileCard').innerHTML = `
+                <div class="error-state">
+                    <div class="error-icon">😕</div>
+                    <h2>រកមិនើញគណនី</h2>
+                    <p>គណនី "<strong>${username || 'Unknown'}</strong>" មិនមានក្នុងប្រព័ន្ធ ឬ Link នេះអត់សុពលភាព។</p>
+                    ${code ? `<div class="share-code" style="margin-bottom:20px;"><i class="bi bi-link-45deg"></i> Code: ${code}</div>` : ''}
+                    <a href="../.." class="btn-custom btn-primary-custom" style="display:inline-flex;">
+                        <i class="bi bi-house"></i> ត្រឡប់ទៅទំព័រដើម
+                    </a>
+                </div>
+            `;
+            
+            document.title = 'Profile Not Found - AHNAJAK CODE';
         }
     </script>
 </body>
