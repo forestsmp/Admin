@@ -242,7 +242,7 @@
             const saved = localStorage.getItem('current_user');
             if (!saved) {
                 alert('Please login to view your purchases.');
-                window.location.href = '../login/login.html';
+                window.location.href = '../login';
                 return;
             }
             currentUser = JSON.parse(saved);
