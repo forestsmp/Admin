@@ -2,113 +2,231 @@
 <html lang="km">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Page Not Found</title>
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="robots" content="noindex, nofollow">
+    <title>Not Found</title>
     <link rel="icon" type="image/png" sizes="48x48" href="https://i.ibb.co/20ZRpT38/web-search-1-1.webp">
-    
-    <link rel="icon" type="image/png" sizes="48x48" href="https://i.ibb.co/20ZRpT38/web-search-1-1.webp">
-    
-    <!-- ដាក់ហ្វុងខ្ែរ Kantumruy Pro -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Kantumruy+Pro:wght@300;400;700&display=swap" rel="stylesheet">
-
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            -webkit-touch-callout: none;
         }
 
         body {
-            font-family: 'Kantumruy Pro', sans-serif;
-            background-color: #f5f5f5; /* ពណ៌ប្រផេះស្រាលសម្រាប់ផ្ទៃខាងក្រៅ */
-            color: #333;
-            height: 100vh;
+            font-family: 'Georgia', serif;
+            background-color: white;
+            min-height: 100vh;
             display: flex;
-            justify-content: center;
             align-items: center;
-            text-align: center;
+            justify-content: center;
+            padding: 20px;
+            overflow: hidden;
+            touch-action: manipulation;
         }
 
-        /* ប្រអប់ពណ៌សមានស្រមោល */
         .container {
             max-width: 800px;
-            width: 90%;
-            padding: 3rem 2rem;
-            background-color: #ffffff;
-            border-radius: 20px;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
-            animation: fadeInUp 0.8s ease-out;
-        }
-
-        /* រូបភាព 404 ពី link */
-        .error-image {
             width: 100%;
-            max-width: 500px;
-            height: auto;
-            display: block;
-            margin: 0 auto;
+            text-align: center;
+            pointer-events: auto;
         }
 
-        /* អត្ថបទ Page not found - ពណ៌ #6A8 */
-        .error-text {
-            margin-top: 2rem;
-            font-size: 1.8rem;
-            font-weight: 700;
-            font-family: 'Kantumruy Pro', sans-serif;
-            color: #383838; /* ពណ៌បៃតង */
-            letter-spacing: 2px;
+        .image-container {
+            height: 300px;
+            background-image: url('https://cdn.dribbble.com/users/285475/screenshots/2083086/dribbble_1.gif');
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: contain;
+            position: relative;
+            pointer-events: none;
         }
 
-        /* Keyframe Animations */
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+        .heading-404 {
+            font-size: 80px;
+            color: black;
+            padding-top: 20px;
+            font-weight: bold;
+            pointer-events: none;
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
+        .content {
+            margin-top: -40px;
+            position: relative;
+            z-index: 10;
         }
 
-        @keyframes float {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-15px); }
+        .title {
+            font-size: 32px;
+            color: black;
+            font-weight: bold;
+            margin-bottom: 16px;
+            pointer-events: none;
         }
 
-        /* Responsive សម្រាប់ទូរសព្ទ */
+        .description {
+            font-size: 18px;
+            color: #4b5563;
+            margin-bottom: 24px;
+            pointer-events: none;
+        }
+
+        .btn-home {
+            background-color: #16a34a;
+            color: white;
+            border: none;
+            padding: 16px 32px;
+            font-size: 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            transition: background-color 0.3s;
+            font-family: inherit;
+            pointer-events: auto;
+            -webkit-user-select: none;
+            user-select: none;
+        }
+
+        .btn-home:hover {
+            background-color: #15803d;
+        }
+
+        .btn-home:active {
+            transform: scale(0.98);
+        }
+
         @media (max-width: 640px) {
-            .container {
-                padding: 2rem 1rem;
-                width: 95%;
+            .heading-404 {
+                font-size: 60px;
             }
-            
-            .error-text {
-                font-size: 1.3rem;
-                letter-spacing: 1px;
+
+            .title {
+                font-size: 24px;
+            }
+
+            .description {
+                font-size: 16px;
+            }
+
+            .image-container {
+                height: 250px;
+            }
+        }
+
+        @media (min-width: 641px) and (max-width: 768px) {
+            .heading-404 {
+                font-size: 70px;
+            }
+
+            .image-container {
+                height: 280px;
+            }
+        }
+
+        /* Prevent zoom on double tap */
+        @supports (-webkit-touch-callout: none) {
+            .btn-home {
+                transform-origin: center center;
             }
         }
     </style>
 </head>
-<body>
-
+<body oncontextmenu="return false;">
     <div class="container">
-        <!-- រូបភាពពី link -->
-        <img src="https://i.ibb.co/zh1d2tzB/1784269432872.webp" 
-             alt="404 Page Not Found" 
-             class="error-image">
+        <div class="image-container">
+            <h1 class="heading-404">404</h1>
+        </div>
         
-        <!-- អត្ថបទ Page not found ពណ៌ #6A8 -->
-        <p class="error-text">Page not found</p>
+        <div class="content">
+            <h2 class="title">Look like you're lost</h2>
+            <p class="description">The page you are looking for is not available!</p>
+        </div>
     </div>
 
+    <script>
+        // Disable right click
+        document.addEventListener('contextmenu', function(e) {
+            e.preventDefault();
+            return false;
+        });
+
+        // Disable copy, cut, paste
+        document.addEventListener('copy', function(e) {
+            e.preventDefault();
+            return false;
+        });
+
+        document.addEventListener('cut', function(e) {
+            e.preventDefault();
+            return false;
+        });
+
+        document.addEventListener('paste', function(e) {
+            e.preventDefault();
+            return false;
+        });
+
+        // Disable text selection
+        document.addEventListener('selectstart', function(e) {
+            e.preventDefault();
+            return false;
+        });
+
+        // Disable drag
+        document.addEventListener('dragstart', function(e) {
+            e.preventDefault();
+            return false;
+        });
+
+        // Prevent zoom on mobile (pinch zoom)
+        document.addEventListener('gesturestart', function(e) {
+            e.preventDefault();
+        });
+
+        document.addEventListener('gesturechange', function(e) {
+            e.preventDefault();
+        });
+
+        document.addEventListener('gestureend', function(e) {
+            e.preventDefault();
+        });
+
+        // Prevent double tap zoom
+        let lastTouchEnd = 0;
+        document.addEventListener('touchend', function(e) {
+            const now = Date.now();
+            if (now - lastTouchEnd <= 300) {
+                e.preventDefault();
+            }
+            lastTouchEnd = now;
+        }, false);
+
+        // Prevent zoom with keyboard (Ctrl +, Ctrl -)
+        document.addEventListener('keydown', function(e) {
+            if ((e.ctrlKey || e.metaKey) && (e.key === '+' || e.key === '-' || e.key === '0')) {
+                e.preventDefault();
+                return false;
+            }
+        });
+
+        // Home button click
+        document.querySelector('.btn-home').addEventListener('click', function(e) {
+            e.preventDefault();
+            window.location.href = '/';
+        });
+
+        // Prevent selection on all elements
+        const elements = document.querySelectorAll('*');
+        elements.forEach(function(el) {
+            el.setAttribute('unselectable', 'on');
+            el.setAttribute('draggable', 'false');
+        });
+    </script>
 </body>
 </html>
