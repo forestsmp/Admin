@@ -3,17 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- ✅ Title & Description (រក្សាទុកដូចដើម) -->
     <title>Anajak Code</title>
     <meta name="description" content="coding, selling and giving away minecraft plugins">
+    <link rel="canonical" href="https://www.anajakcode.site/">
     
-    <!-- Favicon -->
-    <link rel="icon" type="image/png" sizes="48x48" href="./images/favicon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="./images/favicon.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="./images/favicon.png">
-    <link rel="apple-touch-icon" sizes="180x180" href="./images/favicon.png">
-    <link rel="shortcut icon" href="./images/favicon.png">
+    <!-- ✅ Favicon (Local Path សម្រាប់ Vercel) -->
+    <link rel="icon" type="image/png" sizes="48x48" href="/images/favicon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon.png">
+    <link rel="shortcut icon" href="/images/favicon.png">
 
-    <!-- Open Graph (FIXED) -->
+    <!-- 📱 Open Graph / Facebook -->
     <meta property="og:site_name" content="Anajak Code">
     <meta property="og:title" content="Anajak Code - minecraft plugins and coding">
     <meta property="og:description" content="coding, selling and giving away minecraft plugins">
@@ -21,27 +24,27 @@
     <meta property="og:url" content="https://www.anajakcode.site">
     <meta property="og:type" content="website">
 
-    <!-- Twitter -->
+    <!-- 🐦 Twitter -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Anajak Code">
     <meta name="twitter:description" content="coding, selling and giving away minecraft plugins">
     <meta name="twitter:image" content="https://www.anajakcode.site/images/favicon.png">
     
-    <!-- Additional Meta -->
+    <!-- Additional Meta Tags -->
     <meta name="theme-color" content="#667eea">
     <meta name="msapplication-TileColor" content="#667eea">
-    <meta name="msapplication-TileImage" content="./images/favicon.png">
+    <meta name="msapplication-TileImage" content="/images/favicon.png">
     
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Kantumruy+Pro:wght@300;400;600;700&family=Poppins:wght@300;400;600;700;800&display=swap" rel="stylesheet">
     
-    <!-- Bootstrap -->
+    <!-- Bootstrap CSS & Icons -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
 
-    <!-- Schema.org JSON-LD -->
+    <!-- ✅ Structured Data for Google (Fixed Syntax & Local Logo) -->
     <script type="application/ld+json">
     {
         "@context": "https://schema.org",
@@ -64,9 +67,7 @@
         }
     }
     </script>
-</head>
-<body>
-    
+
     <style>
         :root { 
             --primary-color: #667eea;
@@ -279,8 +280,9 @@
     
     <nav class="navbar navbar-expand-lg navbar-light">
         <div class="container">
-            <a class="navbar-brand" href="../..">
-                <img src="./images/favicon.png" alt="Anajak Code Logo" style="height: 40px; margin-right: 10px; border-radius: 8px;">
+            <!-- ✅ Updated Logo Source -->
+            <a class="navbar-brand" href="/">
+                <img src="/images/favicon.png" alt="Anajak Code Logo" style="height: 40px; margin-right: 10px; border-radius: 8px;">
                 Anajak Code
             </a>
             <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
@@ -288,15 +290,15 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto align-items-lg-center">
-                    <li class="nav-item"><a class="nav-link" href="../.."><i class="bi bi-grid me-1"></i> Products</a></li>
-                    <li class="nav-item"><a class="nav-link" href="../../purchase"><i class="bi bi-bag-check me-1"></i> My Purchase</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/"><i class="bi bi-grid me-1"></i> Products</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/purchase"><i class="bi bi-bag-check me-1"></i> My Purchase</a></li>
                     <li class="nav-item">
                         <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#cartModal">
                             <i class="bi bi-cart3"></i> Cart <span class="cart-badge" id="cartCount">0</span>
                         </a>
                     </li>
                     <li class="nav-item" id="authSection">
-                        <a class="btn btn-outline-primary ms-lg-2 mt-2 mt-lg-0 text-decoration-none" href="../login"><i class="bi bi-box-arrow-in-right"></i> Login</a>
+                        <a class="btn btn-outline-primary ms-lg-2 mt-2 mt-lg-0 text-decoration-none" href="/login"><i class="bi bi-box-arrow-in-right"></i> Login</a>
                     </li>
                     <li class="nav-item dropdown d-none" id="userSection">
                         <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" role="button" data-bs-toggle="dropdown">
@@ -549,7 +551,7 @@
         function addToCart(id, name, price) {
             if(!currentUser) { 
                 showAlert('Please login first to add items to cart!', 'error'); 
-                setTimeout(() => window.location.href = '../login', 800);
+                setTimeout(() => window.location.href = '/login', 800);
                 return; 
             }
             
@@ -615,7 +617,6 @@
             }
             
             try {
-                // Try fetching from backend first
                 const res = await fetch(`${API_URL}/admin/discounts`);
                 if(res.ok) {
                     const discounts = await res.json();
@@ -635,7 +636,6 @@
                         messageDiv.innerHTML = '<i class="bi bi-x-circle"></i> Invalid or expired code';
                     }
                 } else {
-                    // Fallback to local demo codes if API fails
                     const demoCodes = {'SAVE10': 10, 'SAVE20': 20, 'SAVE50': 50};
                     if(demoCodes[code]) {
                         appliedDiscount = demoCodes[code];
@@ -652,7 +652,6 @@
                     }
                 }
             } catch(e) {
-                // Fallback to local demo codes on network error
                 const demoCodes = {'SAVE10': 10, 'SAVE20': 20, 'SAVE50': 50};
                 if(demoCodes[code]) {
                     appliedDiscount = demoCodes[code];
@@ -682,7 +681,7 @@
         function showCheckoutModal() {
             if(!currentUser) {
                 showAlert('Please login first to checkout!', 'error');
-                setTimeout(() => window.location.href = '../login', 800);
+                setTimeout(() => window.location.href = '/login', 800);
                 return;
             }
             if(cart.length === 0) { showAlert('Cart is empty!', 'error'); return; }
