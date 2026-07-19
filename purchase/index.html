@@ -4,106 +4,53 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Purchases - Anajak Code</title>
-    
-    <!-- Favicon -->
     <link rel="icon" type="image/png" href="https://i.ibb.co/S4vrvBq8/logo-website.png">
-    
-    <!-- Bootstrap & Icons -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
-
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
-        
         :root { 
             --primary-color: #667eea;
-            --secondary-color: #764ba2;
             --success-color: #11998e;
-            --danger-color: #ee0979;
             --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             --success-gradient: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
         }
-        
-        body { 
-            font-family: 'Poppins', sans-serif; 
-            background: linear-gradient(135deg, #f0f9ff 0%, #e6f7ff 100%);
-            min-height: 100vh;
-            padding-bottom: 60px;
-        }
-
+        body { font-family: 'Poppins', sans-serif; background: linear-gradient(135deg, #f0f9ff 0%, #e6f7ff 100%); min-height: 100vh; }
         .page-header { text-align: center; padding: 40px 20px; margin-bottom: 30px; }
         .page-header h1 { font-size: 2.5rem; font-weight: 700; background: var(--primary-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        
-        .back-link { display: inline-flex; align-items: center; gap: 8px; color: var(--primary-color); text-decoration: none; font-weight: 600; padding: 10px 20px; border-radius: 50px; background: white; box-shadow: 0 4px 15px rgba(0,0,0,0.05); transition: all 0.3s; margin-bottom: 20px; }
-        .back-link:hover { transform: translateX(-5px); color: var(--secondary-color); }
-
-        .order-card { background: white; border-radius: 20px; padding: 30px; margin-bottom: 25px; box-shadow: 0 10px 40px rgba(0,0,0,0.05); border-left: 6px solid var(--primary-color); transition: all 0.3s ease; }
-        .order-card:hover { transform: translateY(-5px); box-shadow: 0 15px 50px rgba(0,0,0,0.1); }
-        
+        .back-link { display: inline-flex; align-items: center; gap: 8px; color: var(--primary-color); text-decoration: none; font-weight: 600; padding: 10px 20px; border-radius: 50px; background: white; box-shadow: 0 4px 15px rgba(0,0,0,0.05); transition: all 0.3s; }
+        .back-link:hover { transform: translateX(-5px); }
+        .order-card { background: white; border-radius: 20px; padding: 30px; margin-bottom: 25px; box-shadow: 0 10px 40px rgba(0,0,0,0.05); border-left: 6px solid var(--primary-color); }
         .order-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; padding-bottom: 15px; border-bottom: 1px dashed #eee; flex-wrap: wrap; gap: 10px; }
         .order-id { font-weight: 700; color: var(--primary-color); font-size: 1.3rem; }
-        .order-date { color: #718096; font-size: 0.9rem; }
-        
         .status-badge { padding: 6px 16px; border-radius: 50px; font-size: 0.8rem; font-weight: 700; text-transform: uppercase; }
         .status-completed { background: #e6fffa; color: var(--success-color); }
         .status-pending { background: #fffbeb; color: #d69e2e; }
-        .status-cancelled { background: #fef2f2; color: var(--danger-color); }
-
         .order-item { display: flex; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid #f7fafc; }
         .item-name { font-weight: 600; color: #2d3748; }
-        .item-price { font-weight: 600; color: #4a5568; }
-
-        .order-summary { margin-top: 20px; padding-top: 20px; border-top: 2px solid #f0f0f0; display: flex; flex-direction: column; align-items: flex-end; gap: 8px; }
         .total-row { font-size: 1.4rem; font-weight: 700; color: var(--primary-color); }
-
-        .btn-download { 
-            background: var(--success-gradient); 
-            color: white; 
-            border: none; 
-            padding: 12px 25px; 
-            border-radius: 12px; 
-            font-weight: 600; 
-            cursor: pointer; 
-            transition: all 0.3s; 
-            margin-top: 20px; 
-            display: inline-flex; 
-            align-items: center; 
-            gap: 8px; 
-            width: 100%; 
-            justify-content: center; 
-            text-decoration: none; 
-        }
+        .btn-download { background: var(--success-gradient); color: white; border: none; padding: 12px 25px; border-radius: 12px; font-weight: 600; cursor: pointer; transition: all 0.3s; margin-top: 20px; display: inline-flex; align-items: center; gap: 8px; width: 100%; justify-content: center; }
         .btn-download:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(17, 153, 142, 0.3); color: white; }
-        .btn-download.disabled { background: #ccc; cursor: not-allowed; transform: none; box-shadow: none; }
-
-        .empty-state { text-align: center; padding: 80px 20px; }
-        .empty-icon { font-size: 5rem; color: #cbd5e0; margin-bottom: 20px; }
+        .btn-download.disabled { background: #ccc; cursor: not-allowed; }
     </style>
 </head>
 <body>
-
     <div class="container">
         <div class="d-flex justify-content-between align-items-center mt-4">
             <a href="../.." class="back-link"><i class="bi bi-arrow-left"></i> Back to Shopping</a>
-            <div id="userInfo" class="fw-bold text-muted d-none d-md-block"></div>
+            <div id="userInfo" class="fw-bold text-muted"></div>
         </div>
-
         <div class="page-header">
             <h1><i class="bi bi-receipt-cutoff"></i> My Purchases</h1>
-            <p class="text-muted">Track your orders and download purchased files anytime</p>
+            <p class="text-muted">Download your purchased files anytime</p>
         </div>
-
         <div id="ordersList">
-            <div class="text-center py-5">
-                <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;"></div>
-                <p class="mt-3 text-muted">Loading purchase history...</p>
-            </div>
+            <div class="text-center py-5"><div class="spinner-border text-primary" style="width: 3rem; height: 3rem;"></div><p class="mt-3">Loading...</p></div>
         </div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        // ✅ កំណត់ API URL ឱ្ត្រឹមត្រូវ (HTTPS)
         const API_URL = 'https://payment.forestsmp.site/api';
         let currentUser = null;
         let currentOrders = [];
@@ -117,128 +64,90 @@
             const saved = localStorage.getItem('current_user');
             if (!saved) { window.location.href = '../login'; return; }
             currentUser = JSON.parse(saved);
-            document.getElementById('userInfo').textContent = `👋 Hello, ${currentUser.name}`;
+            document.getElementById('userInfo').textContent = ` Hello, ${currentUser.name}`;
         }
 
         async function loadOrders() {
             const container = document.getElementById('ordersList');
             try {
-                // 1. Try API First
                 let orders = [];
                 try {
                     const res = await fetch(`${API_URL}/admin/orders`);
                     if(res.ok) {
-                        const allOrders = await res.json();
-                        orders = allOrders.filter(o => o.customer_email === currentUser.email);
+                        const all = await res.json();
+                        orders = all.filter(o => o.customer_email === currentUser.email);
                     }
-                } catch(e) { console.log('API fetch failed, using local storage'); }
-
-                // 2. Fallback to LocalStorage
-                if (!orders || orders.length === 0) {
-                    const localOrders = JSON.parse(localStorage.getItem('ahnajak_orders')) || [];
-                    orders = localOrders.filter(o => o.customer_email === currentUser.email || !o.customer_email);
+                } catch(e) {}
+                
+                if (!orders.length) {
+                    const local = JSON.parse(localStorage.getItem('ahnajak_orders')) || [];
+                    orders = local.filter(o => o.customer_email === currentUser.email);
                 }
-
-                currentOrders = orders.sort((a, b) => new Date(b.created_at || b.date) - new Date(a.created_at || a.date));
+                
+                currentOrders = orders.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
                 renderOrders(currentOrders);
-
             } catch (error) {
-                container.innerHTML = `<div class="alert alert-danger text-center">Failed to load orders.</div>`;
+                container.innerHTML = '<div class="alert alert-danger">Failed to load orders</div>';
             }
         }
 
         function renderOrders(orders) {
             const container = document.getElementById('ordersList');
             if (!orders.length) {
-                container.innerHTML = `
-                    <div class="empty-state">
-                        <i class="bi bi-bag-x empty-icon"></i>
-                        <h3>No Orders Found</h3>
-                        <a href="../.." class="btn-download" style="width: auto; display: inline-flex; margin-top: 20px;">Start Shopping</a>
-                    </div>`;
+                container.innerHTML = '<div class="text-center py-5"><i class="bi bi-bag-x" style="font-size:4rem;color:#cbd5e0"></i><h3>No Orders</h3></div>';
                 return;
             }
 
             container.innerHTML = orders.map((order, index) => {
-                const date = new Date(order.created_at || order.date).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
-                const status = (order.status || 'completed').toLowerCase();
-                const orderId = order.order_id || order.id || `ORD-${index+1}`;
-                
-                // ✅ ពិនិត្យមើលថាតើ Item ទាំងអស់មាន File ដែរទេ
+                const date = new Date(order.created_at).toLocaleDateString();
                 const hasFiles = (order.items || []).some(item => {
-                    const fileUrl = item.image_url;
-                    return fileUrl && fileUrl !== 'null' && fileUrl !== '' && 
-                           (fileUrl.match(/\.(jar|zip|rar|tar|exe|msi|pdf|doc|docx)$/i) || 
-                            !fileUrl.match(/\.(png|jpg|jpeg|gif|webp)$/i));
+                    const url = item.image_url;
+                    return url && url !== 'null' && !url.match(/\.(png|jpg|jpeg|gif|webp)$/i);
                 });
                 
                 return `
                 <div class="order-card">
                     <div class="order-header">
-                        <div>
-                            <div class="order-id">#${orderId}</div>
-                            <div class="order-date"><i class="bi bi-calendar3"></i> ${date}</div>
+                        <div><div class="order-id">#${order.id}</div><div class="text-muted"><i class="bi bi-calendar"></i> ${date}</div></div>
+                        <span class="status-badge status-${order.status}">${order.status}</span>
+                    </div>
+                    ${(order.items || []).map(item => `
+                        <div class="order-item">
+                            <div><span class="item-name">${item.product_name}</span> <span class="text-muted">x${item.quantity}</span></div>
+                            <div class="item-price">$${(item.price * item.quantity).toFixed(2)}</div>
                         </div>
-                        <span class="status-badge status-${status}">${status}</span>
+                    `).join('')}
+                    <div class="mt-3 pt-3 border-top d-flex justify-content-between align-items-center">
+                        <span class="fw-bold">Total Paid:</span>
+                        <span class="total-row">$${order.total_price.toFixed(2)}</span>
                     </div>
-
-                    <div class="items-list">
-                        ${(order.items || []).map(item => `
-                            <div class="order-item">
-                                <div>
-                                    <span class="item-name">${item.product_name || item.name || 'Product'}</span> 
-                                    <span class="text-muted">x${item.quantity}</span>
-                                </div>
-                                <div class="item-price">$${((item.price || 0) * item.quantity).toFixed(2)}</div>
-                            </div>
-                        `).join('')}
-                    </div>
-
-                    <div class="order-summary">
-                        <div class="d-flex justify-content-between w-100 mb-1"><span>Subtotal:</span> <span>$${(order.total_price || 0).toFixed(2)}</span></div>
-                        <div class="total-row"><span>Total Paid:</span> <span>$${(order.total_price || 0).toFixed(2)}</span></div>
-                    </div>
-
-                    <!-- ✅ ប៊ូតុង Download ដែលតភ្ជាប់ទៅ Function ផ្ទាល់ -->
-                    <button class="btn-download ${hasFiles ? '' : 'disabled'}" onclick="downloadOrderFiles(${index})">
-                        <i class="bi bi-cloud-arrow-down-fill"></i> 
-                        ${hasFiles ? 'Download Purchased Files' : 'No Downloadable Files'}
+                    <button class="btn-download ${hasFiles ? '' : 'disabled'}" onclick="downloadFiles(${index})">
+                        <i class="bi bi-cloud-arrow-down"></i> ${hasFiles ? 'Download Files' : 'No Downloadable Files'}
                     </button>
                 </div>`;
             }).join('');
         }
 
-        // ✅ Function សម្រាប់ Download File ជាក់ស្តែង
-        function downloadOrderFiles(index) {
+        function downloadFiles(index) {
             const order = currentOrders[index];
             if (!order || !order.items) return;
-
-            let downloadedCount = 0;
             
+            let count = 0;
             order.items.forEach(item => {
-                // ពិនិត្យមើលថាតើមាន image_url ហើយមិនមែនជា Image ធម្មតា
-                const fileUrl = item.image_url;
-                if (fileUrl && fileUrl !== 'null' && fileUrl !== '') {
-                    // ពិនិត្យថាតើជា File ដែលអាច Download បាន (.jar, .zip, .exe, etc.)
-                    const isDownloadable = fileUrl.match(/\.(jar|zip|rar|tar|exe|msi|pdf|doc|docx)$/i);
-                    
-                    if (isDownloadable || !fileUrl.match(/\.(png|jpg|jpeg|gif|webp)$/i)) {
-                        // បងកើត Link ដើម្បី Download
-                        const link = document.createElement('a');
-                        link.href = `${API_URL}${fileUrl}`;
-                        link.download = fileUrl.split('/').pop();
-                        link.target = '_blank';
-                        document.body.appendChild(link);
-                        link.click();
-                        document.body.removeChild(link);
-                        downloadedCount++;
-                    }
+                const url = item.image_url;
+                if (url && url !== 'null' && !url.match(/\.(png|jpg|jpeg|gif|webp)$/i)) {
+                    const link = document.createElement('a');
+                    link.href = `${API_URL}${url}`;
+                    link.download = url.split('/').pop();
+                    link.target = '_blank';
+                    document.body.appendChild(link);
+                    link.click();
+                    document.body.removeChild(link);
+                    count++;
                 }
             });
-
-            if (downloadedCount === 0) {
-                alert('No downloadable files found for this order.');
-            }
+            
+            if (count === 0) alert('No files to download');
         }
     </script>
 </body>
