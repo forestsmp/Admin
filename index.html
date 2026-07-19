@@ -5,71 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Anajak Code</title>
     
-    <!-- ✅ Professional Meta Description -->
-    <meta name="description" content="Anajak Code - Premium coding solutions and tech accessories">
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="./images/favicon.png">
     
-    <!-- ✅ Favicon (Local Path from GitHub) -->
-    <link rel="icon" type="image/png" sizes="48x48" href="./images/favicon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="./images/favicon.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="./images/favicon.png">
-    <link rel="apple-touch-icon" sizes="180x180" href="./images/favicon.png">
-    <link rel="shortcut icon" href="./images/favicon.png">
-
-    <!-- 📱 Open Graph / Facebook -->
-    <meta property="og:site_name" content="Anajak Code">
-    <meta property="og:title" content="Anajak Code">
-    <meta property="og:description" content="coding solutions and tech accessories">
-    <meta property="og:image" content="https://www.anajakcode.site/images/favicon.png">
-    <meta property="og:url" content="https://www.anajakcode.site">
-    <meta property="og:type" content="website">
-
-    <!--  Twitter -->
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Anajak Code">
-    <meta name="twitter:description" content="coding solutions and tech accessories">
-    <meta name="twitter:image" content="https://www.anajakcode.site/images/favicon.png">
-    
-    <!-- Additional Meta Tags -->
-    <meta name="theme-color" content="#667eea">
-    <meta name="msapplication-TileColor" content="#667eea">
-    <meta name="msapplication-TileImage" content="./images/favicon.png">
-    
-    <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Kantumruy+Pro:wght@300;400;600;700&family=Poppins:wght@300;400;600;700;800&display=swap" rel="stylesheet">
-    
-    <!-- Bootstrap CSS & Icons -->
+    <!-- Fonts & Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Kantumruy+Pro:wght@300;400;600;700&family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
 
-    <!-- ✅ FIXED Structured Data (Removed Trailing Comma & Fixed URLs) -->
-    <script type="application/ld+json">
-    {
-        "@context": "https://schema.org",
-        "@type": "Organization",
-        "name": "Anajak Code",
-        "url": "https://www.anajakcode.site",
-        "logo": "https://www.anajakcode.site/images/favicon.png",
-        "description": "coding solutions and tech accessories",
-        "sameAs": [
-            "https://facebook.com/anajakcode",
-            "https://t.me/anajakcode",
-            "https://instagram.com/anajakcode"
-        ],
-        "contactPoint": {
-            "@type": "ContactPoint",
-            "telephone": "+855-963692937",
-            "contactType": "customer service",
-            "areaServed": "KH",
-            "availableLanguage": ["Khmer", "English"]
-        }
-    }
-    </script>
-</head>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Hanuman:wght@300;400;700&family=Poppins:wght@300;400;600;700&display=swap');
-        
         :root { 
             --primary-color: #667eea;
             --secondary-color: #764ba2;
@@ -85,41 +29,11 @@
         * { margin: 0; padding: 0; box-sizing: border-box; }
         
         body { 
-            font-family: 'Poppins', 'Hanuman', sans-serif; 
+            font-family: 'Poppins', 'Kantumruy Pro', sans-serif; 
             min-height: 100vh;
             overflow-x: hidden;
             position: relative;
-        }
-        
-        /* Sky Background with Blur Effect */
-        body::before {
-            content: '';
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: 
-                linear-gradient(135deg, #87CEEB 0%, #E0F6FF 30%, #B0E0E6 60%, #87CEEB 100%),
-                radial-gradient(circle at 20% 30%, rgba(255,255,255,0.8) 0%, transparent 40%),
-                radial-gradient(circle at 80% 70%, rgba(255,255,255,0.6) 0%, transparent 50%);
-            filter: blur(0.5px);
-            z-index: -2;
-        }
-        
-        body::after {
-            content: '';
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: 
-                radial-gradient(ellipse at 15% 25%, rgba(255,255,255,0.7) 0%, transparent 35%),
-                radial-gradient(ellipse at 85% 75%, rgba(255,255,255,0.5) 0%, transparent 45%),
-                radial-gradient(ellipse at 50% 50%, rgba(255,255,255,0.3) 0%, transparent 60%);
-            pointer-events: none;
-            z-index: -1;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
         }
         
         .navbar { 
@@ -129,7 +43,6 @@
             position: sticky; 
             top: 0; 
             z-index: 1000;
-            transition: all 0.3s;
         }
         
         .navbar-brand { 
@@ -150,6 +63,7 @@
             transition: all 0.3s;
             padding: 8px 16px !important;
             border-radius: 25px;
+            font-size: 1.1rem;
         }
         
         .nav-link:hover {
@@ -158,56 +72,22 @@
             transform: translateY(-2px);
         }
 
-        .dropdown-menu {
-            border: none;
-            box-shadow: var(--card-shadow);
-            border-radius: 15px;
-            padding: 10px;
-            margin-top: 10px !important;
-        }
-        .dropdown-item {
-            border-radius: 10px;
-            padding: 10px 15px;
-            font-weight: 500;
-            transition: all 0.2s;
-        }
-        .dropdown-item:hover {
-            background: #f7fafc;
-            color: var(--primary-color);
-            transform: translateX(5px);
-        }
-        .dropdown-item i { width: 20px; margin-right: 8px; }
-        
         .cart-badge { 
             background: var(--danger-gradient); 
             color: white; 
             border-radius: 50%; 
             padding: 3px 10px; 
-            font-size: 0.75rem; 
+            font-size: 0.8rem; 
             margin-left: 5px;
-            animation: pulse 2s infinite;
         }
         
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.1); }
-        }
-        
-        .main-container { 
-            padding: 60px 20px; 
-            min-height: calc(100vh - 200px);
-            position: relative;
-            z-index: 1;
-        }
-        
+        .main-container { padding: 60px 20px; min-height: calc(100vh - 200px); }
         .container { max-width: 1400px; margin: 0 auto; }
         
         .page-title { 
             text-align: center; 
             color: #2c3e50; 
             margin-bottom: 60px;
-            animation: fadeInDown 1s ease;
-            text-shadow: 0 2px 10px rgba(255,255,255,0.5);
         }
         
         .page-title h1 { 
@@ -219,17 +99,12 @@
             -webkit-text-fill-color: transparent;
         }
         
-        .page-title p {
-            font-size: 1.2rem;
-            opacity: 0.9;
-            color: #34495e;
-        }
+        .page-title p { font-size: 1.3rem; opacity: 0.9; color: #34495e; }
         
         .products-grid { 
             display: grid; 
             grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); 
             gap: 35px;
-            animation: fadeInUp 1s ease;
         }
         
         .product-card { 
@@ -260,412 +135,88 @@
             overflow: hidden;
         }
         
-        .product-image img { 
-            width: 100%; 
-            height: 100%; 
-            object-fit: cover;
-            position: relative;
-            z-index: 1;
-            transition: transform 0.5s;
-        }
+        .product-image img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s; }
+        .product-card:hover .product-image img { transform: scale(1.1); }
         
-        .product-card:hover .product-image img {
-            transform: scale(1.1);
-        }
+        .placeholder-icon { font-size: 6rem; color: rgba(255,255,255,0.9); animation: float 3s ease-in-out infinite; }
+        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
         
-        .placeholder-icon {
-            font-size: 6rem;
-            color: rgba(255,255,255,0.9);
-            z-index: 1;
-            animation: float 3s ease-in-out infinite;
-        }
-        
-        @keyframes float {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
-        }
-        
-        .product-info { 
-            padding: 25px;
-            position: relative;
-        }
+        .product-info { padding: 25px; position: relative; }
         
         .product-category {
-            position: absolute;
-            top: -35px;
-            right: 20px;
-            background: var(--success-gradient);
-            color: white;
-            padding: 8px 20px;
-            border-radius: 25px;
-            font-size: 0.85rem;
-            font-weight: 600;
-            box-shadow: 0 5px 15px rgba(17, 153, 142, 0.3);
+            position: absolute; top: -35px; right: 20px;
+            background: var(--success-gradient); color: white;
+            padding: 8px 20px; border-radius: 25px;
+            font-size: 0.9rem; font-weight: 600;
         }
         
-        .product-title { 
-            font-size: 1.5rem; 
-            font-weight: 700; 
-            color: #2d3748;
-            margin-bottom: 10px;
-            line-height: 1.3;
-        }
+        .product-title { font-size: 1.6rem; font-weight: 700; color: #2d3748; margin-bottom: 10px; line-height: 1.3; }
+        .product-description { color: #718096; margin-bottom: 20px; line-height: 1.6; font-size: 1rem; }
         
-        .product-description { 
-            color: #718096; 
-            margin-bottom: 20px;
-            line-height: 1.6;
-            font-size: 0.95rem;
-        }
-        
-        .product-footer {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-top: 20px;
-            padding-top: 20px;
-            border-top: 2px solid #f0f0f0;
-        }
+        .product-footer { display: flex; justify-content: space-between; align-items: center; margin-top: 20px; padding-top: 20px; border-top: 2px solid #f0f0f0; }
         
         .product-price { 
-            font-size: 2rem; 
-            font-weight: 700; 
+            font-size: 2.2rem; font-weight: 700; 
             background: var(--danger-gradient);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
         
-        .stock-badge {
-            background: #e6fffa;
-            color: var(--success-color);
-            padding: 5px 15px;
-            border-radius: 20px;
-            font-size: 0.85rem;
-            font-weight: 600;
-        }
-        
-        .stock-badge.out-of-stock {
-            background: #fff5f5;
-            color: var(--danger-color);
-        }
+        .stock-badge { background: #e6fffa; color: var(--success-color); padding: 5px 15px; border-radius: 20px; font-size: 0.9rem; font-weight: 600; }
+        .stock-badge.out-of-stock { background: #fff5f5; color: var(--danger-color); }
         
         .btn-add-to-cart { 
-            width: 100%; 
-            padding: 15px; 
-            border: none; 
-            border-radius: 15px; 
-            font-weight: 700; 
-            background: var(--primary-gradient); 
-            color: white; 
-            cursor: pointer;
-            transition: all 0.3s;
-            font-size: 1rem;
-            margin-top: 15px;
-            position: relative;
-            overflow: hidden;
+            width: 100%; padding: 15px; border: none; border-radius: 15px; 
+            font-weight: 700; background: var(--primary-gradient); color: white; 
+            cursor: pointer; transition: all 0.3s; font-size: 1.1rem; margin-top: 15px;
         }
+        .btn-add-to-cart:hover:not(:disabled) { transform: translateY(-3px); box-shadow: 0 15px 35px rgba(102, 126, 234, 0.4); }
+        .btn-add-to-cart:disabled { background: #cbd5e0; cursor: not-allowed; }
         
-        .btn-add-to-cart::before {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 0;
-            height: 0;
-            border-radius: 50%;
-            background: rgba(255,255,255,0.3);
-            transform: translate(-50%, -50%);
-            transition: width 0.6s, height 0.6s;
-        }
+        .alert-container { position: fixed; top: 100px; right: 20px; z-index: 9999; max-width: 400px; }
+        .alert-custom { border: none; border-radius: 15px; padding: 18px 25px; margin-bottom: 10px; box-shadow: 0 10px 30px rgba(0,0,0,0.2); animation: slideInRight 0.5s ease; display: flex; align-items: center; gap: 15px; backdrop-filter: blur(10px); }
+        .alert-success-custom { background: var(--success-gradient); color: white; }
+        .alert-error-custom { background: var(--danger-gradient); color: white; }
+        @keyframes slideInRight { from { opacity: 0; transform: translateX(100%); } to { opacity: 1; transform: translateX(0); } }
         
-        .btn-add-to-cart:hover::before {
-            width: 300px;
-            height: 300px;
-        }
+        .modal-content { border-radius: 25px; border: none; box-shadow: 0 20px 60px rgba(0,0,0,0.3); backdrop-filter: blur(10px); }
+        .modal-header { background: var(--primary-gradient); color: white; border-radius: 25px 25px 0 0; border: none; padding: 25px 30px; }
+        .form-control { border-radius: 12px; border: 2px solid #e2e8f0; padding: 14px 18px; font-size: 1rem; }
+        .form-control:focus { border-color: var(--primary-color); box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1); }
         
-        .btn-add-to-cart:hover:not(:disabled) { 
-            transform: translateY(-3px);
-            box-shadow: 0 15px 35px rgba(102, 126, 234, 0.4);
-        }
+        .btn-auth { background: var(--primary-gradient); color: white; border: none; padding: 14px 30px; border-radius: 50px; font-weight: 600; width: 100%; transition: all 0.3s; font-size: 1.1rem; }
+        .btn-auth:hover { transform: translateY(-2px); box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4); }
         
-        .btn-add-to-cart:disabled {
-            background: #cbd5e0;
-            cursor: not-allowed;
-        }
+        .footer { background: rgba(255,255,255,0.9); backdrop-filter: blur(10px); color: #2c3e50; padding: 50px 20px; text-align: center; border-top: 1px solid rgba(255,255,255,0.5); }
+        .footer h3 { margin-bottom: 20px; font-size: 2rem; background: var(--primary-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
         
-        .alert-container { 
-            position: fixed; 
-            top: 100px; 
-            right: 20px; 
-            z-index: 9999; 
-            max-width: 400px; 
-        }
+        .cart-item { display: flex; gap: 15px; padding: 20px; background: #f8f9fa; border-radius: 15px; margin-bottom: 15px; transition: all 0.3s; }
+        .cart-item:hover { background: #e9ecef; transform: translateX(5px); }
         
-        .alert-custom { 
-            border: none; 
-            border-radius: 15px; 
-            padding: 18px 25px; 
-            margin-bottom: 10px; 
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2); 
-            animation: slideInRight 0.5s ease; 
-            display: flex; 
-            align-items: center; 
-            gap: 15px;
-            backdrop-filter: blur(10px);
-        }
+        .btn-checkout { background: var(--success-gradient); color: white; border: none; padding: 16px 30px; border-radius: 50px; font-weight: 700; width: 100%; transition: all 0.3s; font-size: 1.2rem; }
+        .btn-checkout:hover { transform: translateY(-2px); box-shadow: 0 10px 30px rgba(17, 153, 142, 0.4); }
         
-        .alert-success-custom { 
-            background: var(--success-gradient); 
-            color: white; 
-        }
+        .loading-spinner { text-align: center; padding: 80px 20px; color: #2c3e50; grid-column: 1 / -1; }
+        .empty-state { text-align: center; padding: 100px 20px; color: #2c3e50; grid-column: 1 / -1; }
+        .empty-state i { font-size: 8rem; opacity: 0.3; margin-bottom: 30px; color: #7f8c8d; }
         
-        .alert-error-custom { 
-            background: var(--danger-gradient); 
-            color: white; 
-        }
-        
-        @keyframes slideInRight { 
-            from { opacity: 0; transform: translateX(100%); } 
-            to { opacity: 1; transform: translateX(0); } 
-        }
-        
-        @keyframes fadeInDown {
-            from { opacity: 0; transform: translateY(-30px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        
-        @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(30px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        
-        .modal-content { 
-            border-radius: 25px; 
-            border: none;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-            backdrop-filter: blur(10px);
-        }
-        
-        .modal-header { 
-            background: var(--primary-gradient); 
-            color: white; 
-            border-radius: 25px 25px 0 0; 
-            border: none;
-            padding: 25px 30px;
-        }
-        
-        .modal-body { padding: 30px; }
-        
-        .form-control { 
-            border-radius: 12px; 
-            border: 2px solid #e2e8f0; 
-            padding: 14px 18px;
-            transition: all 0.3s;
-        }
-        
-        .form-control:focus {
-            border-color: var(--primary-color);
-            box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1);
-        }
-        
-        .btn-auth { 
-            background: var(--primary-gradient); 
-            color: white; 
-            border: none; 
-            padding: 14px 30px; 
-            border-radius: 50px; 
-            font-weight: 600; 
-            width: 100%;
-            transition: all 0.3s;
-        }
-        
-        .btn-auth:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
-        }
-        
-        .footer { 
-            background: rgba(255,255,255,0.9);
-            backdrop-filter: blur(10px);
-            color: #2c3e50; 
-            padding: 50px 20px; 
-            text-align: center;
-            position: relative;
-            z-index: 1;
-            border-top: 1px solid rgba(255,255,255,0.5);
-        }
-        
-        .footer-content {
-            max-width: 800px;
-            margin: 0 auto;
-        }
-        
-        .footer h3 {
-            margin-bottom: 20px;
-            font-size: 2rem;
-            background: var(--primary-gradient);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-        
-        .footer-links {
-            display: flex;
-            justify-content: center;
-            gap: 30px;
-            margin: 30px 0;
-            flex-wrap: wrap;
-        }
-        
-        .footer-links a {
-            color: #2c3e50;
-            text-decoration: none;
-            padding: 10px 20px;
-            border-radius: 25px;
-            transition: all 0.3s;
-            background: rgba(255,255,255,0.5);
-        }
-        
-        .footer-links a:hover {
-            background: var(--primary-gradient);
-            color: white;
-            transform: translateY(-3px);
-        }
-        
-        .cart-item { 
-            display: flex; 
-            gap: 15px; 
-            padding: 20px; 
-            background: #f8f9fa; 
-            border-radius: 15px; 
-            margin-bottom: 15px;
-            transition: all 0.3s;
-        }
-        
-        .cart-item:hover {
-            background: #e9ecef;
-            transform: translateX(5px);
-        }
-        
-        .btn-checkout { 
-            background: var(--success-gradient); 
-            color: white; 
-            border: none; 
-            padding: 16px 30px; 
-            border-radius: 50px; 
-            font-weight: 700; 
-            width: 100%;
-            transition: all 0.3s;
-            font-size: 1.1rem;
-        }
-        
-        .btn-checkout:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 30px rgba(17, 153, 142, 0.4);
-        }
-        
-        .loading-spinner {
-            text-align: center;
-            padding: 80px 20px;
-            color: #2c3e50;
-            grid-column: 1 / -1;
-        }
-        
-        .empty-state {
-            text-align: center;
-            padding: 100px 20px;
-            color: #2c3e50;
-            grid-column: 1 / -1;
-        }
-        
-        .empty-state i {
-            font-size: 8rem;
-            opacity: 0.3;
-            margin-bottom: 30px;
-            color: #7f8c8d;
-        }
-        
-        .discount-section {
-            background: rgba(255,255,255,0.9);
-            backdrop-filter: blur(10px);
-            border-radius: 20px;
-            padding: 25px;
-            margin-bottom: 30px;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
-            border: 1px solid rgba(255,255,255,0.5);
-        }
-        
-        .discount-input-group {
-            display: flex;
-            gap: 10px;
-        }
-        
-        .discount-input {
-            flex: 1;
-            border-radius: 12px;
-            border: 2px solid #e2e8f0;
-            padding: 12px 18px;
-            font-size: 1rem;
-        }
-        
-        .discount-input:focus {
-            border-color: var(--primary-color);
-            outline: none;
-        }
-        
-        .btn-apply-discount {
-            background: var(--primary-gradient);
-            color: white;
-            border: none;
-            padding: 12px 25px;
-            border-radius: 12px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-        
-        .btn-apply-discount:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
-        }
-        
-        .discount-info {
-            background: #e6fffa;
-            color: var(--success-color);
-            padding: 15px;
-            border-radius: 12px;
-            margin-top: 15px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-        
-        .discount-info.error {
-            background: #fff5f5;
-            color: var(--danger-color);
-        }
+        .discount-section { background: rgba(255,255,255,0.9); backdrop-filter: blur(10px); border-radius: 20px; padding: 25px; margin-bottom: 30px; box-shadow: 0 5px 20px rgba(0,0,0,0.1); border: 1px solid rgba(255,255,255,0.5); }
+        .discount-input-group { display: flex; gap: 10px; }
+        .discount-input { flex: 1; border-radius: 12px; border: 2px solid #e2e8f0; padding: 12px 18px; font-size: 1rem; }
+        .discount-input:focus { border-color: var(--primary-color); outline: none; }
+        .btn-apply-discount { background: var(--primary-gradient); color: white; border: none; padding: 12px 25px; border-radius: 12px; font-weight: 600; cursor: pointer; transition: all 0.3s; }
+        .btn-apply-discount:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4); }
+        .discount-info { background: #e6fffa; color: var(--success-color); padding: 15px; border-radius: 12px; margin-top: 15px; display: flex; align-items: center; justify-content: space-between; font-size: 1rem; }
+        .discount-info.error { background: #fff5f5; color: var(--danger-color); }
 
-        .user-avatar-nav {
-            width: 35px;
-            height: 35px;
-            border-radius: 50%;
-            background: var(--primary-gradient);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-weight: 700;
-            font-size: 0.9rem;
-            margin-right: 8px;
-        }
+        .user-avatar-nav { width: 35px; height: 35px; border-radius: 50%; background: var(--primary-gradient); display: flex; align-items: center; justify-content: center; color: white; font-weight: 700; font-size: 0.9rem; margin-right: 8px; }
         
         @media (max-width: 768px) {
             .page-title h1 { font-size: 2.5rem; }
             .products-grid { grid-template-columns: 1fr; gap: 25px; }
             .product-image { height: 250px; }
             .placeholder-icon { font-size: 5rem; }
-            .footer-links { flex-direction: column; gap: 15px; }
             .discount-input-group { flex-direction: column; }
-            .navbar-collapse { background: white; padding: 20px; border-radius: 0 0 20px 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); margin-top: 10px; }
         }
     </style>
 </head>
@@ -674,7 +225,6 @@
     
     <nav class="navbar navbar-expand-lg navbar-light">
         <div class="container">
-            <!-- ✅ Updated Logo & Brand Name -->
             <a class="navbar-brand" href="../..">
                 <img src="./images/favicon.png" alt="Anajak Code Logo" style="height: 40px; margin-right: 10px; border-radius: 8px;">
                 Anajak Code
@@ -684,27 +234,16 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto align-items-lg-center">
-                    <li class="nav-item">
-                        <a class="nav-link" href="../.."><i class="bi bi-grid me-1"></i> Products</a>
-                    </li>
-                    
-                    <li class="nav-item">
-                        <a class="nav-link" href="../../purchase"><i class="bi bi-bag-check me-1"></i> My Purchase</a>
-                    </li>
-
+                    <li class="nav-item"><a class="nav-link" href="../.."><i class="bi bi-grid me-1"></i> Products</a></li>
+                    <li class="nav-item"><a class="nav-link" href="../../purchase"><i class="bi bi-bag-check me-1"></i> My Purchase</a></li>
                     <li class="nav-item">
                         <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#cartModal">
-                            <i class="bi bi-cart3"></i> Cart 
-                            <span class="cart-badge" id="cartCount">0</span>
+                            <i class="bi bi-cart3"></i> Cart <span class="cart-badge" id="cartCount">0</span>
                         </a>
                     </li>
-
                     <li class="nav-item" id="authSection">
-                        <a class="btn btn-outline-primary ms-lg-2 mt-2 mt-lg-0 text-decoration-none" href="../login">
-                            <i class="bi bi-box-arrow-in-right"></i> Login
-                        </a>
+                        <a class="btn btn-outline-primary ms-lg-2 mt-2 mt-lg-0 text-decoration-none" href="../login"><i class="bi bi-box-arrow-in-right"></i> Login</a>
                     </li>
-
                     <li class="nav-item dropdown d-none" id="userSection">
                         <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" role="button" data-bs-toggle="dropdown">
                             <div class="user-avatar-nav" id="navUserAvatar">U</div>
@@ -726,32 +265,28 @@
 
     <div class="main-container">
         <div class="container">
-            <!-- ✅ Updated Page Title -->
             <div class="page-title">
                 <h1><i class="bi bi-code-slash"></i> Welcome to Anajak Code</h1>
                 <p>coding solutions and tech accessories</p>
             </div>
             <div class="products-grid" id="productsGrid">
                 <div class="loading-spinner">
-                    <div class="spinner-border" role="status" style="width: 3rem; height: 3rem; color: var(--primary-color);">
-                        <span class="visually-hidden">Loading...</span>
-                    </div>
+                    <div class="spinner-border" role="status" style="width: 3rem; height: 3rem; color: var(--primary-color);"></div>
                     <p class="mt-3">Loading products...</p>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- ✅ Updated Footer -->
     <footer class="footer">
         <div class="footer-content">
             <h3><i class="bi bi-code-slash"></i> Anajak Code</h3>
             <p>Your trusted destination for quality coding products and tech accessories.</p>
-            <div class="footer-links">
-                <a href="https://facebook.com/anajakcode" target="_blank"><i class="bi bi-facebook"></i> Facebook</a>
-                <a href="https://t.me/anajakcode" target="_blank"><i class="bi bi-telegram"></i> Telegram</a>
-                <a href="https://instagram.com/anajakcode" target="_blank"><i class="bi bi-instagram"></i> Instagram</a>
-                <a href="mailto:info@anajakcode.site"><i class="bi bi-envelope"></i> Contact</a>
+            <div class="footer-links d-flex justify-content-center gap-4 my-4 flex-wrap">
+                <a href="https://facebook.com/anajakcode" target="_blank" class="text-decoration-none text-dark"><i class="bi bi-facebook"></i> Facebook</a>
+                <a href="https://t.me/anajakcode" target="_blank" class="text-decoration-none text-dark"><i class="bi bi-telegram"></i> Telegram</a>
+                <a href="https://instagram.com/anajakcode" target="_blank" class="text-decoration-none text-dark"><i class="bi bi-instagram"></i> Instagram</a>
+                <a href="mailto:info@anajakcode.site" class="text-decoration-none text-dark"><i class="bi bi-envelope"></i> Contact</a>
             </div>
             <p class="mb-0">&copy; 2026 Anajak Code. All rights reserved.</p>
         </div>
@@ -776,14 +311,8 @@
                         <input type="email" id="editEmail" class="form-control" required>
                     </div>
                     <div id="passwordFields" style="display:none;">
-                        <div class="mb-3">
-                            <label class="form-label fw-bold">New Password</label>
-                            <input type="password" id="newPassword" class="form-control" minlength="6">
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label fw-bold">Confirm New Password</label>
-                            <input type="password" id="confirmPassword" class="form-control">
-                        </div>
+                        <div class="mb-3"><label class="form-label fw-bold">New Password</label><input type="password" id="newPassword" class="form-control" minlength="6"></div>
+                        <div class="mb-3"><label class="form-label fw-bold">Confirm New Password</label><input type="password" id="confirmPassword" class="form-control"></div>
                     </div>
                     <button type="submit" class="btn-auth mt-2">Save Changes</button>
                 </form>
@@ -916,45 +445,28 @@
                 const products = await res.json();
                 
                 if(products.length === 0) {
-                    grid.innerHTML = `
-                        <div class="empty-state">
-                            <i class="bi bi-box-seam"></i>
-                            <h3>No Products Available</h3>
-                            <p>Check back soon for new arrivals!</p>
-                        </div>
-                    `;
+                    grid.innerHTML = `<div class="empty-state"><i class="bi bi-box-seam"></i><h3>No Products Available</h3><p>Check back soon!</p></div>`;
                     return;
                 }
 
                 grid.innerHTML = products.map((p, index) => {
-                    // ពិនិត្យមើលថាតើជា File ឬ Image
                     let mediaHtml = '';
                     const isFile = p.image_url && p.image_url.match(/\.(jar|zip|rar|tar|exe|msi)$/i);
                     
                     if (p.image_url) {
                         if (isFile) {
-                            // បង្ហាញ Icon ឯកសារ
                             const ext = p.image_url.split('.').pop().toUpperCase();
-                            mediaHtml = `
-                                <div class="placeholder-icon">
-                                    <i class="bi bi-file-earmark-zip-fill"></i>
-                                    <div style="font-size:1.2rem; margin-top:10px; font-weight:bold;">.${ext}</div>
-                                </div>`;
+                            mediaHtml = `<div class="placeholder-icon"><i class="bi bi-file-earmark-zip-fill"></i><div style="font-size:1.2rem;margin-top:10px;">.${ext}</div></div>`;
                         } else {
-                            // បង្ហាញរូបភាព
-                            mediaHtml = `<img src="${p.image_url}" 
-                                 alt="${p.name}" 
-                                 onerror="this.src='${DEFAULT_IMAGE}'">`;
+                            mediaHtml = `<img src="${p.image_url}" alt="${p.name}" onerror="this.src='${DEFAULT_IMAGE}'">`;
                         }
                     } else {
-                         mediaHtml = `<div class="placeholder-icon"><i class="bi bi-image"></i></div>`;
+                        mediaHtml = `<div class="placeholder-icon"><i class="bi bi-image"></i></div>`;
                     }
 
                     return `
                     <div class="product-card" style="animation: fadeInUp 0.6s ease ${index * 0.1}s both;">
-                        <div class="product-image">
-                            ${mediaHtml}
-                        </div>
+                        <div class="product-image">${mediaHtml}</div>
                         <div class="product-info">
                             <span class="product-category">New</span>
                             <h3 class="product-title">${p.name}</h3>
@@ -972,20 +484,10 @@
                                 ${p.stock > 0 ? 'Add to Cart' : 'Out of Stock'}
                             </button>
                         </div>
-                    </div>
-                    `;
+                    </div>`;
                 }).join('');
             } catch(e) { 
-                grid.innerHTML = `
-                    <div class="empty-state">
-                        <i class="bi bi-wifi-off"></i>
-                        <h3>Connection Error</h3>
-                        <p>Failed to load products. Please check your connection.</p>
-                        <button class="btn btn-light mt-3" onclick="loadProducts()">
-                            <i class="bi bi-arrow-clockwise"></i> Try Again
-                        </button>
-                    </div>
-                `;
+                grid.innerHTML = `<div class="empty-state"><i class="bi bi-wifi-off"></i><h3>Connection Error</h3><p>Failed to load products.</p><button class="btn btn-light mt-3" onclick="loadProducts()"><i class="bi bi-arrow-clockwise"></i> Try Again</button></div>`;
                 showAlert('Failed to connect to server', 'error'); 
             }
         }
@@ -993,9 +495,7 @@
         function addToCart(id, name, price) {
             if(!currentUser) { 
                 showAlert('Please login first to add items to cart!', 'error'); 
-                setTimeout(() => {
-                    window.location.href = '../login';
-                }, 800);
+                setTimeout(() => window.location.href = '../login', 800);
                 return; 
             }
             
@@ -1032,12 +532,7 @@
             const cartTotalContainer = document.getElementById('cartTotalContainer');
             
             if(cart.length === 0) {
-                cartItemsDiv.innerHTML = `
-                    <div class="text-center text-muted py-5">
-                        <i class="bi bi-cart-x" style="font-size: 4rem; opacity: 0.3;"></i>
-                        <p class="mt-3">Your cart is empty</p>
-                    </div>
-                `;
+                cartItemsDiv.innerHTML = `<div class="text-center text-muted py-5"><i class="bi bi-cart-x" style="font-size: 4rem; opacity: 0.3;"></i><p class="mt-3">Your cart is empty</p></div>`;
                 cartTotalContainer.style.display = 'none';
             } else {
                 cartItemsDiv.innerHTML = cart.map(i => `
@@ -1066,13 +561,14 @@
             }
             
             try {
-                const res = await fetch(`${API_URL}/discounts`);
+                // Try fetching from backend first
+                const res = await fetch(`${API_URL}/admin/discounts`);
                 if(res.ok) {
                     const discounts = await res.json();
-                    const discount = discounts.find(d => d.code === code && d.uses > 0);
+                    const discount = discounts.find(d => d.code === code && d.used < d.limit);
                     
                     if(discount) {
-                        appliedDiscount = discount.percent / 100;
+                        appliedDiscount = discount.percent;
                         discountCode = code;
                         messageDiv.style.display = 'block';
                         messageDiv.className = 'discount-info';
@@ -1085,9 +581,10 @@
                         messageDiv.innerHTML = '<i class="bi bi-x-circle"></i> Invalid or expired code';
                     }
                 } else {
+                    // Fallback to local demo codes if API fails
                     const demoCodes = {'SAVE10': 10, 'SAVE20': 20, 'SAVE50': 50};
                     if(demoCodes[code]) {
-                        appliedDiscount = demoCodes[code] / 100;
+                        appliedDiscount = demoCodes[code];
                         discountCode = code;
                         messageDiv.style.display = 'block';
                         messageDiv.className = 'discount-info';
@@ -1101,9 +598,10 @@
                     }
                 }
             } catch(e) {
+                // Fallback to local demo codes on network error
                 const demoCodes = {'SAVE10': 10, 'SAVE20': 20, 'SAVE50': 50};
                 if(demoCodes[code]) {
-                    appliedDiscount = demoCodes[code] / 100;
+                    appliedDiscount = demoCodes[code];
                     discountCode = code;
                     messageDiv.style.display = 'block';
                     messageDiv.className = 'discount-info';
@@ -1130,9 +628,7 @@
         function showCheckoutModal() {
             if(!currentUser) {
                 showAlert('Please login first to checkout!', 'error');
-                setTimeout(() => {
-                    window.location.href = '../login';
-                }, 800);
+                setTimeout(() => window.location.href = '../login', 800);
                 return;
             }
             if(cart.length === 0) { showAlert('Cart is empty!', 'error'); return; }
@@ -1146,21 +642,25 @@
 
         async function placeOrder(e) {
             e.preventDefault();
-            const total = subtotal - (subtotal * appliedDiscount);
+            const total = subtotal - (subtotal * (appliedDiscount / 100));
             const orderData = {
                 customer_name: document.getElementById('checkoutName').value,
                 customer_email: document.getElementById('checkoutEmail').value,
                 customer_phone: document.getElementById('checkoutPhone').value,
                 items: cart.map(i => ({product_id: i.id, quantity: i.quantity, name: i.name, price: i.price})),
                 discount_code: discountCode,
-                discount_amount: appliedDiscount > 0 ? subtotal * appliedDiscount : 0,
+                discount_amount: appliedDiscount > 0 ? subtotal * (appliedDiscount / 100) : 0,
                 total_price: total,
                 created_at: new Date().toISOString(),
                 status: 'completed'
             };
 
             try {
-                const res = await fetch(`${API_URL}/orders`, { method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify(orderData) });
+                const res = await fetch(`${API_URL}/orders`, { 
+                    method: 'POST', 
+                    headers: {'Content-Type': 'application/json'}, 
+                    body: JSON.stringify(orderData) 
+                });
                 const data = await res.json();
                 
                 if(res.ok && data.order_id) {
