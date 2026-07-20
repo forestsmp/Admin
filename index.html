@@ -4,19 +4,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
-    <!-- ✅ Title & Description (រក្សាទុកដូចដើម) -->
     <title>Anajak Code</title>
     <meta name="description" content="coding, selling and giving away minecraft plugins">
     <link rel="canonical" href="https://www.anajakcode.site/">
     
-    <!-- ✅ Favicon (Local Path សម្រាប់ Vercel) -->
-    <link rel="icon" type="image/png" sizes="48x48" href="./images/favicon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="./images/favicon.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="./images/favicon.png">
-    <link rel="apple-touch-icon" sizes="180x180" href="./images/favicon.png">
-    <link rel="shortcut icon" href="./images/favicon.png">
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" sizes="48x48" href="/images/favicon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon.png">
+    <link rel="shortcut icon" href="/images/favicon.png">
 
-    <!-- 📱 Open Graph / Facebook -->
+    <!-- Open Graph -->
     <meta property="og:site_name" content="Anajak Code">
     <meta property="og:title" content="Anajak Code - minecraft plugins and coding">
     <meta property="og:description" content="coding, selling and giving away minecraft plugins">
@@ -24,27 +23,27 @@
     <meta property="og:url" content="https://www.anajakcode.site">
     <meta property="og:type" content="website">
 
-    <!-- 🐦 Twitter -->
+    <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Anajak Code">
     <meta name="twitter:description" content="coding, selling and giving away minecraft plugins">
     <meta name="twitter:image" content="https://www.anajakcode.site/images/favicon.png">
     
-    <!-- Additional Meta Tags -->
+    <!-- Additional Meta -->
     <meta name="theme-color" content="#667eea">
     <meta name="msapplication-TileColor" content="#667eea">
-    <meta name="msapplication-TileImage" content="./images/favicon.png">
+    <meta name="msapplication-TileImage" content="/images/favicon.png">
     
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Kantumruy+Pro:wght@300;400;600;700&family=Poppins:wght@300;400;600;700;800&display=swap" rel="stylesheet">
     
-    <!-- Bootstrap CSS & Icons -->
+    <!-- Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
 
-    <!-- ✅ Structured Data for Google (Fixed Syntax & Local Logo) -->
+    <!-- Schema.org JSON-LD -->
     <script type="application/ld+json">
     {
         "@context": "https://schema.org",
@@ -180,9 +179,10 @@
             background: rgba(255,255,255,1);
         }
         
+        /* ✅ កែ: ដក gradient ចេញ ដាក់ពណ៌ស/ប្រផេះស្រាល */
         .product-image { 
             height: 280px; 
-            background: var(--primary-gradient);
+            background: #f8f9fa;
             display: flex; 
             align-items: center; 
             justify-content: center;
@@ -190,20 +190,31 @@
             overflow: hidden;
         }
         
-        .product-image img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s; }
-        .product-card:hover .product-image img { transform: scale(1.1); }
+        .product-image img { 
+            width: 100%; 
+            height: 100%; 
+            object-fit: cover; 
+            transition: transform 0.5s;
+        }
         
-        .placeholder-icon { font-size: 6rem; color: rgba(255,255,255,0.9); animation: float 3s ease-in-out infinite; }
-        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+        .product-card:hover .product-image img { 
+            transform: scale(1.1); 
+        }
+        
+        .placeholder-icon { 
+            font-size: 6rem; 
+            color: rgba(102, 126, 234, 0.3); 
+            animation: float 3s ease-in-out infinite; 
+        }
+        
+        @keyframes float { 
+            0%, 100% { transform: translateY(0); } 
+            50% { transform: translateY(-10px); } 
+        }
         
         .product-info { padding: 25px; position: relative; }
         
-        .product-category {
-            position: absolute; top: -35px; right: 20px;
-            background: var(--success-gradient); color: white;
-            padding: 8px 20px; border-radius: 25px;
-            font-size: 0.9rem; font-weight: 600;
-        }
+        /* ✅ ដក product-category (New badge) ចេញ */
         
         .product-title { font-size: 1.6rem; font-weight: 700; color: #2d3748; margin-bottom: 10px; line-height: 1.3; }
         .product-description { color: #718096; margin-bottom: 20px; line-height: 1.6; font-size: 1rem; }
@@ -265,6 +276,55 @@
         .discount-info.error { background: #fff5f5; color: var(--danger-color); }
 
         .user-avatar-nav { width: 35px; height: 35px; border-radius: 50%; background: var(--primary-gradient); display: flex; align-items: center; justify-content: center; color: white; font-weight: 700; font-size: 0.9rem; margin-right: 8px; }
+
+        /* ✅ Skeleton Loading Styles */
+        .skeleton {
+            background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+            background-size: 200% 100%;
+            animation: skeleton-loading 1.5s infinite;
+            border-radius: 8px;
+        }
+
+        @keyframes skeleton-loading {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+
+        .skeleton-image {
+            width: 100%;
+            height: 280px;
+            border-radius: 0;
+        }
+
+        .skeleton-title {
+            width: 70%;
+            height: 24px;
+            margin-bottom: 10px;
+        }
+
+        .skeleton-text {
+            width: 100%;
+            height: 16px;
+            margin-bottom: 8px;
+        }
+
+        .skeleton-price {
+            width: 40%;
+            height: 28px;
+        }
+
+        .skeleton-button {
+            width: 100%;
+            height: 48px;
+            border-radius: 15px;
+            margin-top: 15px;
+        }
+
+        .skeleton-badge {
+            width: 30%;
+            height: 24px;
+            border-radius: 20px;
+        }
         
         @media (max-width: 768px) {
             .page-title h1 { font-size: 2.5rem; }
@@ -280,7 +340,6 @@
     
     <nav class="navbar navbar-expand-lg navbar-light">
         <div class="container">
-            <!-- ✅ Updated Logo Source -->
             <a class="navbar-brand" href="/">
                 <img src="/images/favicon.png" alt="Anajak Code Logo" style="height: 40px; margin-right: 10px; border-radius: 8px;">
                 Anajak Code
@@ -326,10 +385,7 @@
                 <p>coding solutions and tech accessories</p>
             </div>
             <div class="products-grid" id="productsGrid">
-                <div class="loading-spinner">
-                    <div class="spinner-border" role="status" style="width: 3rem; height: 3rem; color: var(--primary-color);"></div>
-                    <p class="mt-3">Loading products...</p>
-                </div>
+                <!-- Skeleton Loading នឹងបង្ហាញនៅទីនេះ -->
             </div>
         </div>
     </div>
@@ -492,8 +548,31 @@
             }
         }
 
+        // ✅ Skeleton Loading HTML
+        function getSkeletonHTML() {
+            return `
+                <div class="product-card">
+                    <div class="product-image skeleton skeleton-image"></div>
+                    <div class="product-info">
+                        <div class="skeleton skeleton-title"></div>
+                        <div class="skeleton skeleton-text"></div>
+                        <div class="skeleton skeleton-text" style="width: 80%;"></div>
+                        <div class="product-footer">
+                            <div class="skeleton skeleton-price"></div>
+                            <div class="skeleton skeleton-badge"></div>
+                        </div>
+                        <div class="skeleton skeleton-button"></div>
+                    </div>
+                </div>
+            `;
+        }
+
         async function loadProducts() {
             const grid = document.getElementById('productsGrid');
+            
+            // ✅ បង្ហាញ Skeleton Loading (3 cards)
+            grid.innerHTML = getSkeletonHTML() + getSkeletonHTML() + getSkeletonHTML();
+            
             try {
                 const res = await fetch(`${API_URL}/products`);
                 if (!res.ok) throw new Error('Network response was not ok');
@@ -505,17 +584,11 @@
                     return;
                 }
 
+                // ✅ បង្ហាញ Products (គមាន New badge, បង្ហាញ Image)
                 grid.innerHTML = products.map((p, index) => {
                     let mediaHtml = '';
-                    const isFile = p.image_url && p.image_url.match(/\.(jar|zip|rar|tar|exe|msi)$/i);
-                    
                     if (p.image_url) {
-                        if (isFile) {
-                            const ext = p.image_url.split('.').pop().toUpperCase();
-                            mediaHtml = `<div class="placeholder-icon"><i class="bi bi-file-earmark-zip-fill"></i><div style="font-size:1.2rem;margin-top:10px;">.${ext}</div></div>`;
-                        } else {
-                            mediaHtml = `<img src="${p.image_url}" alt="${p.name}" onerror="this.src='${DEFAULT_IMAGE}'">`;
-                        }
+                        mediaHtml = `<img src="${p.image_url}" alt="${p.name}" onerror="this.src='${DEFAULT_IMAGE}'">`;
                     } else {
                         mediaHtml = `<div class="placeholder-icon"><i class="bi bi-image"></i></div>`;
                     }
@@ -524,7 +597,7 @@
                     <div class="product-card" style="animation: fadeInUp 0.6s ease ${index * 0.1}s both;">
                         <div class="product-image">${mediaHtml}</div>
                         <div class="product-info">
-                            <span class="product-category">New</span>
+                            <!-- ✅ ដក New badge ចេញ -->
                             <h3 class="product-title">${p.name}</h3>
                             <p class="product-description">${p.description || 'No description available'}</p>
                             <div class="product-footer">
