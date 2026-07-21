@@ -438,8 +438,8 @@
     </div>
 
     <script>
-        // CONFIGURATION
-        const API_URL = 'http://payment.forestsmp.site/api';
+        // ✅ CONFIGURATION - Point to your Cloudflare Tunnel URL
+        const API_URL = 'https://payment.forestsmp.site/api';
 
         // INITIALIZATION
         document.addEventListener('DOMContentLoaded', () => {
@@ -485,7 +485,10 @@
                 document.getElementById('stat-orders').innerText = data.total_orders;
                 document.getElementById('stat-products').innerText = data.total_products;
                 document.getElementById('stat-users').innerText = data.total_users;
-            } catch (error) { console.error("Stats Error:", error); }
+            } catch (error) { 
+                console.error("Stats Error:", error);
+                alert("Cannot connect to backend. Please check your Cloudflare Tunnel.");
+            }
         }
 
         async function fetchProducts() {
@@ -504,7 +507,7 @@
                     // Handle image URL
                     let imgUrl = 'https://via.placeholder.com/40';
                     if(p.image_url) {
-                        imgUrl = `${API_URL}${p.image_url}`; 
+                        imgUrl = `https://payment.forestsmp.site${p.image_url}`; 
                     }
 
                     tbody.innerHTML += `
