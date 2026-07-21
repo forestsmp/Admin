@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Dashboard - Real Data</title>
+    <title>Admin Dashboard - Full Features</title>
     
     <!-- Fonts & Icons -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     
-    <!-- Chart.js for Graphs -->
+    <!-- Chart.js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 
     <style>
@@ -199,6 +199,9 @@
             font-weight: 600;
             font-size: 13px;
             transition: 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
         }
         .btn-primary { background: var(--primary); color: white; }
         .btn-primary:hover { background: #4f46e5; }
@@ -239,6 +242,7 @@
             background: var(--bg-main);
             color: var(--text-primary);
         }
+        select.form-control { appearance: none; cursor: pointer; }
 
         /* Utilities */
         .hidden { display: none !important; }
@@ -253,10 +257,86 @@
         }
         .status-pending { background: rgba(245,158,11,0.1); color: var(--warning); }
         .status-completed { background: rgba(16,185,129,0.1); color: var(--success); }
+        .status-active { background: rgba(99,102,241,0.1); color: var(--primary); }
+        .status-expired { background: rgba(100,116,139,0.1); color: var(--text-secondary); }
 
+        /* ===== TOAST ALERT SYSTEM ===== */
+        .toast-container {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .toast {
+            background: var(--bg-card);
+            border-left: 4px solid var(--primary);
+            padding: 16px 20px;
+            border-radius: 8px;
+            box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            min-width: 300px;
+            animation: slideInRight 0.3s ease forwards;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .toast.success { border-left-color: var(--success); }
+        .toast.error { border-left-color: var(--danger); }
+        .toast.warning { border-left-color: var(--warning); }
+
+        .toast-icon {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            color: white;
+            flex-shrink: 0;
+        }
+        .toast.success .toast-icon { background: var(--success); }
+        .toast.error .toast-icon { background: var(--danger); }
+        .toast.warning .toast-icon { background: var(--warning); }
+
+        .toast-content { flex: 1; }
+        .toast-title { font-weight: 600; font-size: 14px; margin-bottom: 2px; }
+        .toast-message { font-size: 12px; color: var(--text-secondary); }
+
+        .toast-close {
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            cursor: pointer;
+            padding: 4px;
+            font-size: 14px;
+        }
+
+        @keyframes slideInRight {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        @keyframes fadeOut {
+            from { opacity: 1; }
+            to { opacity: 0; transform: translateX(100%); }
+        }
+
+        .toast.removing {
+            animation: fadeOut 0.3s ease forwards;
+        }
     </style>
 </head>
 <body>
+
+    <!-- TOAST CONTAINER -->
+    <div class="toast-container" id="toastContainer"></div>
 
     <!-- SIDEBAR -->
     <aside class="sidebar">
@@ -273,6 +353,9 @@
             </div>
             <div class="menu-item" onclick="showSection('users', this)">
                 <i class="fas fa-users"></i> Users
+            </div>
+            <div class="menu-item" onclick="showSection('discounts', this)">
+                <i class="fas fa-tags"></i> Discounts
             </div>
         </nav>
     </aside>
@@ -400,6 +483,33 @@
             </div>
         </div>
 
+        <!-- DISCOUNTS SECTION -->
+        <div id="section-discounts" class="hidden">
+            <div class="card">
+                <div class="card-header">
+                    <h3>Discount Codes</h3>
+                    <button class="btn btn-primary" onclick="openDiscountModal()"><i class="fas fa-plus"></i> New Code</button>
+                </div>
+                <div class="card-body">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Code</th>
+                                <th>Amount</th>
+                                <th>Usage</th>
+                                <th>Expires</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="discount-table-body">
+                            <tr><td colspan="6" style="text-align:center">Loading...</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
     </div>
 
     <!-- MODAL: ADD PRODUCT -->
@@ -437,6 +547,57 @@
         </div>
     </div>
 
+    <!-- MODAL: ADD DISCOUNT -->
+    <div class="modal" id="discountModal">
+        <div class="modal-content">
+            <h3 style="margin-bottom: 20px;">Create Discount Code</h3>
+            <form id="discountForm" onsubmit="handleSaveDiscount(event)">
+                <div class="form-group">
+                    <label>Discount Code Name</label>
+                    <input type="text" id="dCode" class="form-control" placeholder="e.g., SUMMER2024" required style="text-transform: uppercase;">
+                </div>
+                
+                <div class="form-group">
+                    <label>Max Usage Limit</label>
+                    <select id="dLimitType" class="form-control" onchange="toggleLimitInput()">
+                        <option value="unlimited">Unlimited</option>
+                        <option value="fixed">Fixed Amount</option>
+                    </select>
+                </div>
+
+                <div class="form-group hidden" id="dLimitValueGroup">
+                    <label>Number of Uses</label>
+                    <input type="number" id="dLimitValue" class="form-control" placeholder="e.g., 100" min="1">
+                </div>
+
+                <div class="form-group">
+                    <label>Discount Amount (%)</label>
+                    <input type="number" id="dAmount" class="form-control" placeholder="e.g., 20" min="1" max="100" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Expiration Type</label>
+                    <select id="dExpiryType" class="form-control" onchange="toggleExpiryInput()">
+                        <option value="unlimited">No Expiration (Unlimited)</option>
+                        <option value="days">Days (d)</option>
+                        <option value="months">Months (m)</option>
+                        <option value="years">Years (y)</option>
+                    </select>
+                </div>
+
+                <div class="form-group hidden" id="dExpiryValueGroup">
+                    <label>Duration Amount</label>
+                    <input type="number" id="dExpiryValue" class="form-control" placeholder="e.g., 30" min="1">
+                </div>
+
+                <div style="display: flex; justify-content: flex-end; gap: 10px; margin-top: 20px;">
+                    <button type="button" class="btn" onclick="closeDiscountModal()" style="background: var(--border);">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Create Code</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
     <script>
         // ✅ CONFIGURATION - Point to your Cloudflare Tunnel URL
         const API_URL = 'https://payment.forestsmp.site/api';
@@ -447,28 +608,26 @@
             fetchProducts();
             fetchOrders();
             fetchUsers();
+            fetchDiscounts();
             initChart();
         });
 
         // NAVIGATION LOGIC
         function showSection(sectionId, element) {
-            // Hide all sections
-            ['dashboard', 'products', 'orders', 'users'].forEach(id => {
+            ['dashboard', 'products', 'orders', 'users', 'discounts'].forEach(id => {
                 document.getElementById(`section-${id}`).classList.add('hidden');
             });
-            // Show selected section
             document.getElementById(`section-${sectionId}`).classList.remove('hidden');
             
-            // Update Title
             const titles = {
                 'dashboard': 'Dashboard Overview',
                 'products': 'Product Management',
                 'orders': 'Order History',
-                'users': 'User Management'
+                'users': 'User Management',
+                'discounts': 'Discount Codes'
             };
             document.getElementById('page-title').innerText = titles[sectionId];
 
-            // Update Active Menu
             if(element) {
                 document.querySelectorAll('.menu-item').forEach(item => item.classList.remove('active'));
                 element.classList.add('active');
@@ -487,7 +646,7 @@
                 document.getElementById('stat-users').innerText = data.total_users;
             } catch (error) { 
                 console.error("Stats Error:", error);
-                alert("Cannot connect to backend. Please check your Cloudflare Tunnel.");
+                showToast('Cannot connect to backend', 'error');
             }
         }
 
@@ -504,7 +663,6 @@
                 }
 
                 products.forEach(p => {
-                    // Handle image URL
                     let imgUrl = 'https://via.placeholder.com/40';
                     if(p.image_url) {
                         imgUrl = `https://payment.forestsmp.site${p.image_url}`; 
@@ -581,7 +739,45 @@
             } catch (error) { console.error("Users Error:", error); }
         }
 
-        // --- PRODUCT MANAGEMENT (MODAL) ---
+        async function fetchDiscounts() {
+            try {
+                const res = await fetch(`${API_URL}/admin/discounts`);
+                const discounts = await res.json();
+                const tbody = document.getElementById('discount-table-body');
+                tbody.innerHTML = '';
+
+                if(discounts.length === 0) {
+                    tbody.innerHTML = '<tr><td colspan="6" style="text-align:center; padding: 40px;"><i class="fas fa-tags" style="font-size: 40px; color: var(--text-secondary); margin-bottom: 10px; display: block;"></i>No discount codes yet. Click "New Code" to create one.</td></tr>';
+                    return;
+                }
+
+                discounts.forEach(d => {
+                    const isLimited = d.is_limited;
+                    const statusClass = isLimited ? 'status-expired' : 'status-active';
+                    const statusText = isLimited ? 'Expired / Full' : 'Active';
+                    
+                    let expiryText = 'Never';
+                    if(d.limit_type && d.limit_type !== 'unlimited') {
+                        expiryText = `${d.limit_value} ${d.limit_type}`;
+                    }
+
+                    tbody.innerHTML += `
+                        <tr>
+                            <td><strong style="color: var(--primary); font-family: monospace; font-size: 16px;">${d.code}</strong></td>
+                            <td>${d.percent}%</td>
+                            <td>${d.used} / ${d.limit === 999999 ? '∞' : d.limit}</td>
+                            <td>${expiryText}</td>
+                            <td><span class="status-badge ${statusClass}">${statusText}</span></td>
+                            <td>
+                                <button class="btn btn-danger btn-sm" onclick="deleteDiscount(${d.id})"><i class="fas fa-trash"></i></button>
+                            </td>
+                        </tr>
+                    `;
+                });
+            } catch (error) { console.error("Discounts Error:", error); }
+        }
+
+        // --- PRODUCT MANAGEMENT ---
 
         function openProductModal() {
             document.getElementById('productModal').classList.add('active');
@@ -598,7 +794,6 @@
             const fileInput = document.getElementById('pFile');
             let imageUrl = '';
 
-            // 1. Upload Image if selected
             if (fileInput.files.length > 0) {
                 const formData = new FormData();
                 formData.append('file', fileInput.files[0]);
@@ -613,7 +808,6 @@
                 } catch(err) { console.error("Upload failed", err); }
             }
 
-            // 2. Save Product Data
             const productData = {
                 name: document.getElementById('pName').value,
                 price: parseFloat(document.getElementById('pPrice').value),
@@ -629,12 +823,12 @@
                     body: JSON.stringify(productData)
                 });
                 
-                alert('Product saved successfully!');
+                showToast('Product saved successfully!', 'success');
                 closeProductModal();
-                fetchProducts(); // Refresh list
-                fetchStats();    // Refresh stats
+                fetchProducts();
+                fetchStats();
             } catch (error) {
-                alert('Error saving product');
+                showToast('Error saving product', 'error');
                 console.error(error);
             }
         }
@@ -642,8 +836,100 @@
         async function deleteProduct(id) {
             if(confirm('Are you sure you want to delete this product?')) {
                 await fetch(`${API_URL}/admin/products/${id}`, { method: 'DELETE' });
+                showToast('Product deleted', 'success');
                 fetchProducts();
                 fetchStats();
+            }
+        }
+
+        // --- DISCOUNT MANAGEMENT ---
+
+        function toggleLimitInput() {
+            const type = document.getElementById('dLimitType').value;
+            const group = document.getElementById('dLimitValueGroup');
+            if(type === 'fixed') {
+                group.classList.remove('hidden');
+                document.getElementById('dLimitValue').required = true;
+            } else {
+                group.classList.add('hidden');
+                document.getElementById('dLimitValue').required = false;
+            }
+        }
+
+        function toggleExpiryInput() {
+            const type = document.getElementById('dExpiryType').value;
+            const group = document.getElementById('dExpiryValueGroup');
+            if(type === 'unlimited') {
+                group.classList.add('hidden');
+                document.getElementById('dExpiryValue').required = false;
+            } else {
+                group.classList.remove('hidden');
+                document.getElementById('dExpiryValue').required = true;
+            }
+        }
+
+        function openDiscountModal() {
+            document.getElementById('discountModal').classList.add('active');
+            toggleLimitInput();
+            toggleExpiryInput();
+        }
+
+        function closeDiscountModal() {
+            document.getElementById('discountModal').classList.remove('active');
+            document.getElementById('discountForm').reset();
+        }
+
+        async function handleSaveDiscount(e) {
+            e.preventDefault();
+            
+            const code = document.getElementById('dCode').value.toUpperCase();
+            const percent = parseFloat(document.getElementById('dAmount').value);
+            
+            let limit = 999999; // Default unlimited
+            const limitType = document.getElementById('dLimitType').value;
+            if(limitType === 'fixed') {
+                limit = parseInt(document.getElementById('dLimitValue').value);
+            }
+
+            let expiryDate = null;
+            const expiryType = document.getElementById('dExpiryType').value;
+            if(expiryType !== 'unlimited') {
+                const amount = parseInt(document.getElementById('dExpiryValue').value);
+                const now = new Date();
+                if(expiryType === 'days') now.setDate(now.getDate() + amount);
+                if(expiryType === 'months') now.setMonth(now.getMonth() + amount);
+                if(expiryType === 'years') now.setFullYear(now.getFullYear() + amount);
+                expiryDate = now.toISOString();
+            }
+
+            const discountData = {
+                code: code,
+                percent: percent,
+                limit: limit,
+                expiry_date: expiryDate
+            };
+
+            try {
+                await fetch(`${API_URL}/admin/discounts`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(discountData)
+                });
+                
+                showToast('Discount code created!', 'success');
+                closeDiscountModal();
+                fetchDiscounts();
+            } catch (error) {
+                showToast('Error creating discount', 'error');
+                console.error(error);
+            }
+        }
+
+        async function deleteDiscount(id) {
+            if(confirm('Delete this discount code?')) {
+                await fetch(`${API_URL}/admin/discounts/${id}`, { method: 'DELETE' });
+                showToast('Discount deleted', 'success');
+                fetchDiscounts();
             }
         }
 
@@ -679,6 +965,42 @@
                     }
                 }
             });
+        }
+
+        // ===== TOAST NOTIFICATION SYSTEM =====
+        function showToast(message, type = 'success', title = '') {
+            const container = document.getElementById('toastContainer');
+            
+            const icons = {
+                success: 'fa-check',
+                error: 'fa-times',
+                warning: 'fa-exclamation'
+            };
+
+            const defaultTitles = {
+                success: 'Success',
+                error: 'Error',
+                warning: 'Warning'
+            };
+
+            const toast = document.createElement('div');
+            toast.className = `toast ${type}`;
+            toast.innerHTML = `
+                <div class="toast-icon"><i class="fas ${icons[type]}"></i></div>
+                <div class="toast-content">
+                    <div class="toast-title">${title || defaultTitles[type]}</div>
+                    <div class="toast-message">${message}</div>
+                </div>
+                <button class="toast-close" onclick="this.parentElement.remove()"><i class="fas fa-times"></i></button>
+            `;
+
+            container.appendChild(toast);
+
+            // Auto remove after 3 seconds
+            setTimeout(() => {
+                toast.classList.add('removing');
+                setTimeout(() => toast.remove(), 300);
+            }, 3000);
         }
     </script>
 </body>
